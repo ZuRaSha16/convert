@@ -109,9 +109,11 @@
   animation-play-state: paused;
 }
 
-/* Independent translate/rotate properties preserve the existing scroll effects. */
+/* Independent translate/rotate properties keep the float smooth during hover. */
 .hero-phone {
-  animation: ambient-phone-float 9s ease-in-out infinite;
+  --phone-sway: 4px;
+  --phone-rock: 1.25deg;
+  animation: ambient-phone-float 8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 .hero .reminder-float {
   animation: ambient-card-float 7s -2s ease-in-out infinite;
@@ -165,10 +167,12 @@
 @keyframes ambient-phone-float {
   0%,
   100% {
-    translate: 0 0;
+    translate: calc(-1 * var(--phone-sway)) 0;
+    rotate: calc(-7deg - var(--phone-rock));
   }
   50% {
-    translate: 0 -10px;
+    translate: var(--phone-sway) -18px;
+    rotate: calc(-7deg + var(--phone-rock));
   }
 }
 @keyframes ambient-card-float {
@@ -187,6 +191,10 @@
 }
 
 @media (max-width: 640px) {
+  .hero-phone {
+    --phone-sway: 2px;
+    --phone-rock: 0.5deg;
+  }
   .ambient-particle:nth-of-type(n + 11) {
     display: none;
   }
