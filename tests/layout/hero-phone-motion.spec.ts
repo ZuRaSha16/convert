@@ -14,8 +14,13 @@ test("first phone stays anchored on scroll and eases back after hover", async ({
     const style = getComputedStyle(phone);
     return { rotate: style.rotate, animation: style.animationName };
   });
-  expect(appearance.rotate).toBe("-7deg");
-  if (testInfo.project.name === "mobile-motion") expect(appearance.animation).toBe("ambient-phone-float");
+  if (testInfo.project.name === "mobile-motion") {
+    expect(appearance.animation).toBe("scene-phone-float");
+    expect(parseFloat(appearance.rotate)).toBeGreaterThanOrEqual(-8.25);
+    expect(parseFloat(appearance.rotate)).toBeLessThanOrEqual(-5.75);
+  } else {
+    expect(appearance.rotate).toBe("-7deg");
+  }
 
   for (const y of [100, 300, 0]) {
     await page.evaluate(y => window.scrollTo(0, y), y);

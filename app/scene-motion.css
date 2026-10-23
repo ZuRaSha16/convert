@@ -90,7 +90,9 @@
 
 /* Product motion remains local to the product, never to the page background. */
 .hero-phone {
-  animation: scene-phone-float 9s ease-in-out infinite;
+  --phone-sway: 4px;
+  --phone-rock: 1.25deg;
+  animation: scene-phone-float 8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 .hero .reminder-float {
   animation: scene-card-float 7s -2s ease-in-out infinite;
@@ -134,10 +136,12 @@
 @keyframes scene-phone-float {
   0%,
   100% {
-    translate: 0 0;
+    translate: calc(-1 * var(--phone-sway)) 0;
+    rotate: calc(-7deg - var(--phone-rock));
   }
   50% {
-    translate: 0 -7px;
+    translate: var(--phone-sway) -18px;
+    rotate: calc(-7deg + var(--phone-rock));
   }
 }
 @keyframes scene-card-float {
@@ -150,6 +154,10 @@
   }
 }
 @media (max-width: 640px) {
+  .hero-phone {
+    --phone-sway: 2px;
+    --phone-rock: 0.5deg;
+  }
   .atmosphere-particle:nth-of-type(n + 9) {
     display: none;
   }
