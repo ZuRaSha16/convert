@@ -1,0 +1,211 @@
+/* Card illustrations share a quiet, eight-second rhythm. Offscreen cards pause. */
+.feature-card {
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.feature-card:hover {
+  border-color: #7b9bc6;
+  box-shadow: 0 14px 36px #15376312;
+}
+.feature-card .dashboard-bars i {
+  transform-origin: left;
+  animation: feature-balance-flow 8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.feature-card .notification-demo {
+  transform-origin: center;
+  animation: feature-notification-arrive 8s cubic-bezier(0.22, 1, 0.36, 1)
+    infinite;
+}
+.feature-reminders .feature-icon svg {
+  transform-origin: 50% 15%;
+  animation: feature-bell-nudge 8s ease-in-out infinite;
+}
+.feature-card .notification-logo {
+  animation: feature-logo-pulse 8s ease-in-out infinite;
+}
+.repayment-line {
+  stroke-dasharray: 1;
+  animation: feature-chart-draw 8s cubic-bezier(0.33, 0, 0.2, 1) infinite;
+}
+.repayment-area {
+  animation: feature-chart-fill 8s ease-in-out infinite;
+}
+.feature-chart > div > span:last-child svg {
+  animation: feature-sparkle 8s ease-in-out infinite;
+}
+.feature-payments .feature-icon {
+  position: relative;
+}
+.feature-payments .feature-icon::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border: 1px solid currentColor;
+  border-radius: 10px;
+  opacity: 0;
+  animation: feature-roadmap-pulse 8s ease-out infinite;
+}
+.feature-card .planned-badge {
+  overflow: hidden;
+}
+.feature-card .planned-badge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent, #8fbaff33, transparent);
+  transform: translateX(-110%);
+  animation: feature-roadmap-sheen 8s ease-in-out infinite;
+}
+.feature-card[data-animate="paused"] *,
+.feature-card[data-animate="paused"] *::after {
+  animation-play-state: paused;
+}
+@keyframes feature-balance-flow {
+  0% {
+    transform: scaleX(0.08);
+    opacity: 0.5;
+  }
+  20%,
+  80% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  92%,
+  100% {
+    transform: scaleX(0.08);
+    opacity: 0.5;
+  }
+}
+@keyframes feature-notification-arrive {
+  0%,
+  5% {
+    transform: translateY(13px) rotate(-1deg) scale(0.96);
+    opacity: 0.35;
+  }
+  17% {
+    transform: translateY(-3px) rotate(-3.4deg) scale(1);
+    opacity: 1;
+  }
+  24%,
+  67% {
+    transform: translateY(0) rotate(-3deg) scale(1);
+    opacity: 1;
+  }
+  78% {
+    transform: translateY(-4px) rotate(-2deg) scale(1);
+    opacity: 1;
+  }
+  92%,
+  100% {
+    transform: translateY(13px) rotate(-1deg) scale(0.96);
+    opacity: 0.35;
+  }
+}
+@keyframes feature-bell-nudge {
+  0%,
+  12%,
+  28%,
+  100% {
+    transform: rotate(0);
+  }
+  15%,
+  21% {
+    transform: rotate(13deg);
+  }
+  18%,
+  24% {
+    transform: rotate(-10deg);
+  }
+}
+@keyframes feature-logo-pulse {
+  0%,
+  14%,
+  30%,
+  100% {
+    transform: scale(1);
+  }
+  21% {
+    transform: scale(1.08);
+  }
+}
+@keyframes feature-chart-draw {
+  0%,
+  5% {
+    stroke-dashoffset: 1;
+    opacity: 0.4;
+  }
+  36%,
+  83% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  94%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+@keyframes feature-chart-fill {
+  0%,
+  10% {
+    opacity: 0;
+  }
+  36%,
+  83% {
+    opacity: 1;
+  }
+  94%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes feature-sparkle {
+  0%,
+  32%,
+  58%,
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 0.7;
+  }
+  43% {
+    transform: scale(1.25) rotate(12deg);
+    opacity: 1;
+  }
+}
+@keyframes feature-roadmap-pulse {
+  0%,
+  10% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.5;
+  }
+  42%,
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+@keyframes feature-roadmap-sheen {
+  0%,
+  30% {
+    transform: translateX(-110%);
+  }
+  58%,
+  100% {
+    transform: translateX(110%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feature-card,
+  .feature-card *,
+  .feature-card *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .repayment-line {
+    stroke-dashoffset: 0;
+  }
+}
