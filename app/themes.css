@@ -898,7 +898,8 @@
   --glow-y: 0px;
   position: relative;
   isolation: isolate;
-  overflow: visible;
+  /* Clip the moving glow and its blur to the control's rounded shape. */
+  overflow: hidden;
   border: 1px solid #34d39966;
   border-radius: 11px;
   background: #a7f3d066;
@@ -951,7 +952,7 @@
     .nav-cta.glow-control,
     .email-field .glow-control
   )::before {
-  inset: -1px;
+  inset: 0;
   padding: 1px;
   border-radius: inherit;
   background: radial-gradient(
