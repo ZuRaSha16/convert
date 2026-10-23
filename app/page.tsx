@@ -7,13 +7,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import {
-  AnimatePresence,
-  MotionConfig,
-  motion,
-  useMotionValue,
-  useSpring,
-} from "motion/react";
+import { AnimatePresence, MotionConfig, motion, useInView } from "motion/react";
 import { useReducedMotion } from "@/components/use-reduced-motion";
 import {
   ArrowDown,
@@ -40,7 +34,7 @@ import { PhonePreview, type PreviewTab } from "@/components/phone-preview";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { FeatureCard } from "@/components/feature-card";
-import { AmbientBackground } from "@/components/ambient-background";
+import { SiteBackground } from "@/components/site-background";
 import { GlowLink } from "@/components/glow-link";
 
 function Brand({ light = false }: { light?: boolean }) {
@@ -86,48 +80,6 @@ function Reveal({
   );
 }
 
-function FlowArtwork({ dark = false }: { dark?: boolean }) {
-  return (
-    <svg
-      className={`flow-art ${dark ? "flow-dark" : ""}`}
-      viewBox="0 0 900 900"
-      fill="none"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient
-          id={dark ? "flowDark" : "flowLight"}
-          x1="120"
-          y1="50"
-          x2="810"
-          y2="840"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#6ee7b7" stopOpacity=".18" />
-          <stop offset=".47" stopColor="#34d399" />
-          <stop offset="1" stopColor="#a7f3d0" stopOpacity=".15" />
-        </linearGradient>
-      </defs>
-      {Array.from({ length: 24 }, (_, i) => (
-        <path
-          key={i}
-          d={`M${50 + i * 8} -40 C${980 - i * 12} ${90 + i * 8}, ${-190 + i * 12} ${720 - i * 9}, ${710 + i * 7} 960`}
-          stroke={`url(#${dark ? "flowDark" : "flowLight"})`}
-          strokeWidth={i % 5 === 0 ? 1.6 : 0.85}
-        />
-      ))}
-      <path
-        className="flow-tracer"
-        d="M100 -40 C900 130,-110 660,760 960"
-        stroke="#a7f3d0"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeDasharray="12 1250"
-      />
-    </svg>
-  );
-}
-
 function Landing({
   language,
   setLanguage,
@@ -141,10 +93,8 @@ function Landing({
   const [faq, setFaq] = useState<number | null>(0);
   const privacyRef = useRef<HTMLDialogElement>(null);
   const reduce = useReducedMotion();
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const lightX = useSpring(mouseX, { stiffness: 45, damping: 25 });
-  const lightY = useSpring(mouseY, { stiffness: 45, damping: 25 });
+  const heroRef = useRef<HTMLElement>(null);
+  const heroVisible = useInView(heroRef, { margin: "80px" });
   const openPrivacy = () => privacyRef.current?.showModal();
   const nav = [
     { href: "#features", label: t("Features", "შესაძლებლობები") },
@@ -159,6 +109,7 @@ function Landing({
   return (
     <MotionConfig reducedMotion="user">
       <div className="site-shell" data-language={language}>
+        <SiteBackground />
         <a className="skip-link" href="#main">
           {t("Skip to content", "შინაარსზე გადასვლა")}
         </a>
@@ -237,20 +188,9 @@ function Landing({
           <section
             id="home"
             className="hero"
-            onPointerMove={(event) => {
-              if (!reduce && event.pointerType === "mouse") {
-                const box = event.currentTarget.getBoundingClientRect();
-                mouseX.set((event.clientX - box.left - box.width / 2) * 0.035);
-                mouseY.set((event.clientY - box.top - box.height / 2) * 0.035);
-              }
-            }}
+            ref={heroRef}
+            data-motion={heroVisible && !reduce ? "running" : "paused"}
           >
-            <AmbientBackground variant="hero" seed={1} />
-            <motion.div
-              className="hero-light"
-              style={reduce ? undefined : { x: lightX, y: lightY }}
-              aria-hidden="true"
-            />
             <div className="container hero-grid">
               <div className="hero-copy">
                 <Reveal>
@@ -329,10 +269,7 @@ function Landing({
               </div>
               <div className="hero-stage">
                 <div className="orbit orbit-one" />
-                <div className="orbit orbit-two" />
-                <div className="orbit orbit-three" />
-                <div className="orbital-dot dot-one" />
-                <div className="orbital-dot dot-two" />
+
                 <div className="stage-coordinate coordinate-top">
                   41°43′ N &nbsp; 44°47′ E
                 </div>
@@ -474,11 +411,7 @@ function Landing({
             </div>
           </div>
 
-          <section
-            className="problem-section section-padding ambient-section"
-            id="the-shift"
-          >
-            <AmbientBackground seed={2} />
+          <section className="problem-section section-padding" id="the-shift">
             <div className="container">
               <Reveal className="section-topline">
                 <span className="eyebrow">
@@ -566,8 +499,6 @@ function Landing({
             className="experience-section section-padding"
             id="experience"
           >
-            <AmbientBackground variant="immersive" seed={3} />
-            <FlowArtwork dark />
             <div className="container experience-grid">
               <div className="experience-copy">
                 <Reveal>
@@ -667,11 +598,7 @@ function Landing({
             </div>
           </section>
 
-          <section
-            id="features"
-            className="features-section section-padding ambient-section"
-          >
-            <AmbientBackground seed={4} />
+          <section id="features" className="features-section section-padding">
             <div className="container">
               <Reveal className="section-heading-row">
                 <div>
@@ -888,11 +815,7 @@ function Landing({
             </div>
           </section>
 
-          <section
-            id="how-it-works"
-            className="how-section section-padding ambient-section"
-          >
-            <AmbientBackground seed={5} />
+          <section id="how-it-works" className="how-section section-padding">
             <div className="container">
               <Reveal className="how-heading">
                 <span className="eyebrow">
@@ -945,11 +868,7 @@ function Landing({
             </div>
           </section>
 
-          <section
-            id="about"
-            className="trust-section section-padding ambient-section"
-          >
-            <AmbientBackground seed={6} />
+          <section id="about" className="trust-section section-padding">
             <div className="container trust-grid">
               <Reveal className="trust-visual">
                 <div className="trust-orbit">
@@ -1123,8 +1042,6 @@ function Landing({
           </section>
 
           <section id="waitlist" className="waitlist-section">
-            <AmbientBackground variant="closing" seed={7} />
-            <FlowArtwork />
             <div className="container waitlist-content">
               <Reveal>
                 <div className="eyebrow pill-eyebrow">

@@ -17,9 +17,9 @@ Run `npm run test:layout` after building to check both phone previews at 320, 37
 
 - English and Georgian interface with a browser-saved language preference.
 - Light and dark palettes with a header toggle. Starts from the system color scheme, remembers an explicit choice, and resolves the palette before the first paint.
-- Animated SVG financial paths, pointer-responsive hero lighting, scroll-linked phone scaling, entrance sequences, and reduced-motion support.
+- One continuous animated background across the full page, with restrained blue/emerald lighting, subtle pointer parallax, fine data paths, and reduced-motion support.
 - Feature illustrations animate their balance bars, reminder, repayment curve, and roadmap details; each pauses offscreen and stays static with reduced motion enabled.
-- Floating emerald particles, drifting blue/emerald light fields, and flowing data paths animate seven section backgrounds. Hero mockups and rings float independently of scroll movement. Backgrounds pause offscreen or in hidden tabs, use fewer particles on mobile, and become static under reduced motion.
+- A single fixed scene replaces individual section backdrops. Twenty subtle particles become eight on mobile; background motion pauses in hidden tabs and becomes static under reduced motion. Product mockups float independently and pause offscreen.
 - Interactive fictional dashboard, obligation details, reminder toggle, payment timeline, and a repayment slider. Planner calculation: `ceil(4200 / monthlyPayment)`, excluding interest and fees.
 - Accessible navigation, native privacy dialog, FAQ accordion, mobile navigation, and validated waitlist form.
 - No live account access, bank/government partnerships, or payments are implied. All financial values are fictional.

@@ -1,0 +1,170 @@
+/* One viewport-sized atmosphere persists behind the entire scrolling page. */
+.site-atmosphere {
+  --scene-end: #eef3fa;
+  --scene-emerald-light: #34d39912;
+  --scene-blue-light: #6e9bd51a;
+  --scene-particle: #168364;
+  --scene-particle-opacity: 0.2;
+  --scene-path: #5e94ba;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  contain: strict;
+  background: linear-gradient(135deg, var(--paper), var(--scene-end));
+}
+:root[data-theme="dark"] .site-atmosphere {
+  --scene-end: #101f31;
+  --scene-emerald-light: #34d39913;
+  --scene-blue-light: #629ce91c;
+  --scene-particle: #90dcc4;
+  --scene-particle-opacity: 0.3;
+  --scene-path: #86c8e0;
+}
+.atmosphere-light-field {
+  position: absolute;
+  inset: -30px;
+}
+.atmosphere-light {
+  position: absolute;
+  width: 95vw;
+  height: 110vh;
+}
+.atmosphere-light-emerald {
+  right: -30%;
+  top: -38%;
+  background: radial-gradient(
+    ellipse,
+    var(--scene-emerald-light),
+    transparent 68%
+  );
+  animation: scene-light-drift 28s ease-in-out infinite alternate;
+}
+.atmosphere-light-blue {
+  left: -32%;
+  bottom: -44%;
+  background: radial-gradient(
+    ellipse,
+    var(--scene-blue-light),
+    transparent 68%
+  );
+  animation: scene-light-drift 36s -13s ease-in-out infinite alternate-reverse;
+}
+.atmosphere-paths {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.atmosphere-track {
+  stroke: var(--scene-path);
+  stroke-width: 0.65;
+  opacity: 0.09;
+}
+.atmosphere-track-secondary {
+  opacity: 0.045;
+}
+.atmosphere-tracer {
+  stroke: var(--scene-particle);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-dasharray: 16 2400;
+  opacity: 0.3;
+  animation: scene-current-travel 34s linear infinite;
+}
+.atmosphere-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--scene-particle);
+  opacity: var(--scene-particle-opacity);
+  animation: scene-particle-drift var(--duration) var(--delay) ease-in-out
+    infinite alternate;
+}
+.site-atmosphere[data-motion="paused"] * {
+  animation-play-state: paused;
+}
+
+/* Product motion remains local to the product, never to the page background. */
+.hero-phone {
+  animation: scene-phone-float 9s ease-in-out infinite;
+}
+.hero .reminder-float {
+  animation: scene-card-float 7s -2s ease-in-out infinite;
+}
+.hero .progress-float {
+  animation: scene-card-float 8s -5s ease-in-out infinite reverse;
+}
+.site-shell:has(.site-atmosphere[data-motion="paused"])
+  :is(.hero-phone, .floating-card) {
+  animation-play-state: paused;
+}
+.hero[data-motion="paused"] :is(.hero-phone, .floating-card) {
+  animation-play-state: paused;
+}
+
+@keyframes scene-light-drift {
+  from {
+    transform: translate3d(-4%, 3%, 0) scale(0.96);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(5%, -4%, 0) scale(1.06);
+    opacity: 1;
+  }
+}
+@keyframes scene-particle-drift {
+  from {
+    transform: translate3d(0, 12px, 0);
+    opacity: calc(var(--scene-particle-opacity) * 0.5);
+  }
+  to {
+    transform: translate3d(var(--drift-x), var(--drift-y), 0);
+    opacity: var(--scene-particle-opacity);
+  }
+}
+@keyframes scene-current-travel {
+  to {
+    stroke-dashoffset: -2416;
+  }
+}
+@keyframes scene-phone-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+@keyframes scene-card-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 2px -5px;
+  }
+}
+@media (max-width: 640px) {
+  .atmosphere-particle:nth-of-type(n + 9) {
+    display: none;
+  }
+  .atmosphere-track-secondary {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-atmosphere *,
+  .hero-phone,
+  .hero .floating-card {
+    animation: none !important;
+  }
+  .atmosphere-particle,
+  .atmosphere-tracer {
+    display: none;
+  }
+}

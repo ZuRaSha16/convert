@@ -1,0 +1,115 @@
+/* Transparent sections share a single scene, without individual color bands. */
+.site-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+}
+:root {
+  --scene-copy: #5e7392;
+  --scene-heading-soft: #6884ab;
+  --scene-rule: #7795bb30;
+  --scene-selection: #dce8f45c;
+  --scene-panel: #f7faff9e;
+  --scene-panel-border: #9db5d33d;
+}
+:root[data-theme="dark"] {
+  --scene-copy: #acbdd4;
+  --scene-heading-soft: #a7bedc;
+  --scene-rule: #9ab9e724;
+  --scene-selection: #5585b51a;
+  --scene-panel: #192a3e94;
+  --scene-panel-border: #92b9e02e;
+}
+:root[data-theme] :is(main > section, .obligations-strip, .site-footer) {
+  background: transparent;
+  border-block: 0;
+}
+:root[data-theme] :is(.experience-section::after, .waitlist-section::before) {
+  content: none;
+}
+:root[data-theme] .trust-visual {
+  background: transparent;
+}
+:root[data-theme] .experience-section {
+  color: var(--ink);
+}
+:root[data-theme] .experience-section .experience-copy h2 em {
+  color: var(--scene-heading-soft);
+}
+:root[data-theme] .experience-section .experience-copy .eyebrow {
+  color: var(--scene-copy);
+}
+:root[data-theme] .experience-section .experience-copy > div > p {
+  color: var(--scene-copy);
+}
+:root[data-theme] .experience-section .experience-tab {
+  border-top-color: var(--scene-rule);
+}
+:root[data-theme] .experience-section .experience-tab:last-child {
+  border-bottom-color: var(--scene-rule);
+}
+:root[data-theme] .experience-section .experience-tab.active {
+  background: var(--scene-selection);
+  border-left-color: var(--accent-strong);
+}
+:root[data-theme] .experience-section .experience-tab-icon {
+  color: var(--scene-heading-soft);
+  border-color: var(--scene-rule);
+}
+:root[data-theme]
+  .experience-section
+  .experience-tab.active
+  .experience-tab-icon {
+  color: var(--accent-strong);
+  background: #6ee7b710;
+}
+:root[data-theme]
+  .experience-section
+  :is(
+    .experience-tab small,
+    .experience-tab > svg,
+    .interactive-note,
+    .preview-footnote
+  ) {
+  color: var(--scene-copy);
+}
+:root[data-theme] .experience-section .experience-tab strong {
+  color: var(--ink);
+}
+:root[data-theme] .experience-section .experience-tab.active strong {
+  color: var(--ink);
+}
+:root[data-theme] .experience-section .experience-tab p {
+  color: var(--scene-copy);
+}
+:root[data-theme] .experience-section .preview-halo {
+  background: none;
+  border-color: var(--scene-rule);
+  box-shadow: none;
+}
+:root[data-theme] .feature-grid .feature-card {
+  background: var(--scene-panel);
+  border-color: var(--scene-panel-border);
+  box-shadow: inset 0 1px 0 #ffffff08;
+}
+:root[data-theme] .feature-grid .feature-card:hover {
+  border-color: #789fcb73;
+}
+:root[data-theme] .obligations-strip .strip-inner {
+  border-top: 1px solid var(--scene-rule);
+  border-bottom: 1px solid var(--scene-rule);
+}
+.hero .orbit-one {
+  opacity: 0.35;
+  animation: none;
+}
+:root[data-theme] .hero-bottom {
+  border-top: 0;
+}
+:root[data-theme] .site-header {
+  background: #f6f8fcbf;
+  border-bottom-color: var(--scene-rule);
+}
+:root[data-theme="dark"] .site-header {
+  background: #111b2cbf;
+}

@@ -4,8 +4,8 @@ import "./globals.css";
 import "./themes.css";
 import "./hero-preview.css";
 import "./feature-motion.css";
-import "./ambient-motion.css";
-import "./section-blends.css";
+import "./scene-motion.css";
+import "./site-scene.css";
 
 // Resolve the palette before paint. Only the root attribute is changed before
 // hydration; the toggle uses an identical server/first-client snapshot.
