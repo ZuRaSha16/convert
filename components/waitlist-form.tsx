@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { ArrowUpRight, Check, LoaderCircle } from "lucide-react";
 import { useCopy } from "./language";
+import { GlowButton } from "./glow-link";
 
 export function WaitlistForm({
   language,
@@ -82,7 +83,7 @@ export function WaitlistForm({
           maxLength={254}
           aria-describedby={state === "error" ? "waitlist-message" : undefined}
         />
-        <button type="submit" disabled={state === "loading"}>
+        <GlowButton type="submit" disabled={state === "loading"}>
           {state === "loading" ? (
             <LoaderCircle size={20} className="spin" />
           ) : (
@@ -91,7 +92,7 @@ export function WaitlistForm({
               <ArrowUpRight size={19} />
             </>
           )}
-        </button>
+        </GlowButton>
       </div>
       <div className="honeypot" aria-hidden="true">
         <label htmlFor="website">Website</label>

@@ -412,7 +412,9 @@
 }
 :root[data-theme="dark"] .balance-card {
   border-color: #455a7b;
-  box-shadow: inset 0 1px 0 #ffffff0a, 0 4px 12px #00000018;
+  box-shadow:
+    inset 0 1px 0 #ffffff0a,
+    0 4px 12px #00000018;
 }
 :root[data-theme="dark"]
   :is(
@@ -873,28 +875,186 @@
   background: #05070bb8;
 }
 
-/* All calls to action share the same emerald fill in either palette. */
-:root[data-theme]
-  :is(
-    .button-accent,
-    .nav-cta,
-    .email-field > button,
-    .privacy-dialog .button-dark
-  ) {
+/* Dialog actions retain their emerald fill. */
+:root[data-theme] .privacy-dialog .button-dark {
   background: var(--accent);
   color: #07352a;
   border-color: var(--accent);
 }
-:root[data-theme]
-  :is(
-    .button-accent,
-    .nav-cta,
-    .email-field > button,
-    .privacy-dialog .button-dark
-  ):hover {
+:root[data-theme] .privacy-dialog .button-dark:hover {
   background: var(--accent-hover);
   color: #07352a;
   border-color: var(--accent-hover);
+}
+
+/* Frosted theme-aware glass, illuminated only on interaction. */
+:root[data-theme]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  ) {
+  --glow-x: 50%;
+  --glow-y: 0px;
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  border: 1px solid #34d39966;
+  border-radius: 11px;
+  background: #a7f3d066;
+  color: #064e3b;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 #ffffff70,
+    0 4px 14px #102c4b08;
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+:root[data-theme="dark"]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  ) {
+  background: #064e3b80;
+  color: #e0fff2;
+  border-color: #6ee7b747;
+  box-shadow:
+    inset 0 1px 0 #bedff00c,
+    0 4px 14px #00000012;
+}
+:root[data-theme]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  )::before,
+:root[data-theme]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  )::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+:root[data-theme]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  )::before {
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    90px circle at var(--glow-x) var(--glow-y),
+    #b4ffe7,
+    #6ee7b76b 42%,
+    transparent 78%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  z-index: 1;
+}
+:root[data-theme]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  )::after {
+  left: var(--glow-x);
+  top: var(--glow-y);
+  width: 105px;
+  height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    #6ee7b754,
+    #82ddeb20 40%,
+    transparent 72%
+  );
+  filter: blur(9px);
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+@media (hover: hover) and (pointer: fine) {
+  :root[data-theme]
+    :is(
+      .hero-actions .glow-control,
+      .nav-cta.glow-control,
+      .email-field .glow-control
+    ):hover {
+    background: #6ee7b76b;
+    color: #064e3b;
+    border-color: #6ee7b766;
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 #ffffff70,
+      0 4px 16px #12324b10;
+  }
+  :root[data-theme="dark"]
+    :is(
+      .hero-actions .glow-control,
+      .nav-cta.glow-control,
+      .email-field .glow-control
+    ):hover {
+    background: #08755785;
+    color: #f5fffc;
+    box-shadow:
+      inset 0 1px 0 #bedff015,
+      0 4px 16px #00000020;
+  }
+  :root[data-theme]
+    :is(
+      .hero-actions .glow-control,
+      .nav-cta.glow-control,
+      .email-field .glow-control
+    ):hover::before,
+  :root[data-theme]
+    :is(
+      .hero-actions .glow-control,
+      .nav-cta.glow-control,
+      .email-field .glow-control
+    ):hover::after {
+    opacity: 1;
+  }
+}
+:root[data-theme]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  ):focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 4px;
+}
+:root[data-theme]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  ):focus-visible::before,
+:root[data-theme]
+  :is(
+    .hero-actions .glow-control,
+    .nav-cta.glow-control,
+    .email-field .glow-control
+  ):focus-visible::after {
+  opacity: 1;
 }
 
 @media (max-width: 1100px) {

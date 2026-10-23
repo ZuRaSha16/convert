@@ -43,6 +43,7 @@ import { WaitlistForm } from "@/components/waitlist-form";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { FeatureCard } from "@/components/feature-card";
 import { AmbientBackground } from "@/components/ambient-background";
+import { GlowLink } from "@/components/glow-link";
 
 function Brand({ light = false }: { light?: boolean }) {
   return (
@@ -195,10 +196,10 @@ function Landing({
                 <span>{language === "en" ? "EN" : "ქარ"}</span>
                 <ChevronDown size={11} />
               </button>
-              <a className="button button-dark nav-cta" href="#waitlist">
+              <GlowLink className="button button-dark nav-cta" href="#waitlist">
                 {t("Join the waitlist", "შემოუერთდი სიას")}
                 <ArrowUpRight size={16} />
-              </a>
+              </GlowLink>
               <button
                 className="menu-toggle"
                 aria-label={t("Toggle menu", "მენიუს გადართვა")}
@@ -303,13 +304,13 @@ function Landing({
                     )}
                   </p>
                   <div className="hero-actions">
-                    <a className="button button-accent" href="#waitlist">
+                    <GlowLink className="button button-accent" href="#waitlist">
                       {t(
                         "Find your financial calm",
                         "იპოვე ფინანსური სიმშვიდე",
                       )}
                       <ArrowUpRight size={18} />
-                    </a>
+                    </GlowLink>
                     <a className="text-link" href="#experience">
                       <span className="play-icon">
                         <ArrowDown size={14} />
@@ -376,9 +377,12 @@ function Landing({
                         "ერთი საზრუნავით ნაკლები.",
                       )}
                     </strong>
-                    <p>{t("Personal loan", "პირადი სესხი")} <b>₾450.00</b></p>
+                    <p>
+                      {t("Personal loan", "პირადი სესხი")} <b>₾450.00</b>
+                    </p>
                     <span className="widget-due">
-                      <span />{t("Due in 3 days", "ვადა 3 დღეში")}
+                      <span />
+                      {t("Due in 3 days", "ვადა 3 დღეში")}
                     </span>
                   </div>
                   <span className="float-time">{t("now", "ახლა")}</span>
@@ -391,8 +395,20 @@ function Landing({
                 >
                   <span className="mini-ring">
                     <svg viewBox="0 0 48 48" aria-hidden="true">
-                      <circle className="widget-ring-track" cx="24" cy="24" r="20" />
-                      <circle className="widget-ring-fill" cx="24" cy="24" r="20" pathLength="100" strokeDasharray="32 100" />
+                      <circle
+                        className="widget-ring-track"
+                        cx="24"
+                        cy="24"
+                        r="20"
+                      />
+                      <circle
+                        className="widget-ring-fill"
+                        cx="24"
+                        cy="24"
+                        r="20"
+                        pathLength="100"
+                        strokeDasharray="32 100"
+                      />
                     </svg>
                     <Check size={17} />
                   </span>
@@ -409,7 +425,9 @@ function Landing({
                         {t("closer to freedom", "უფრო ახლოს თავისუფლებასთან")}
                       </small>
                     </strong>
-                    <div className="widget-progress" aria-hidden="true"><span /></div>
+                    <div className="widget-progress" aria-hidden="true">
+                      <span />
+                    </div>
                   </div>
                   <Sparkles size={15} />
                 </motion.div>
