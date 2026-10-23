@@ -1,0 +1,216 @@
+/* The hero gets a richer app treatment at its native CSS resolution. */
+.hero-stage {
+  height: 730px;
+}
+.hero-phone {
+  rotate: -7deg;
+}
+.hero-phone .phone-compact {
+  border-radius: 42px;
+  box-shadow: 0 0 0 1px #90a3bf, inset 0 0 0 1px #ffffff70,
+    6px 8px 0 -3px #152238, 0 28px 48px #12243e30;
+}
+.hero-phone .phone-content {
+  padding: 12px 14px 0;
+}
+.hero-phone .phone-greeting {
+  margin-bottom: 12px;
+}
+.hero-phone .phone-greeting h3 {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.7px;
+}
+.hero-phone .notification-button {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+.hero-phone .phone-tabs {
+  gap: 3px;
+  padding: 4px;
+  border: 0;
+  border-radius: 10px;
+  background: #e5edf7;
+  margin-bottom: 14px;
+}
+.hero-phone .phone-tabs button {
+  padding: 6px 3px;
+  border-radius: 7px;
+  font-size: 10px;
+}
+.hero-phone .phone-tabs button.active {
+  background: #fff;
+  box-shadow: 0 2px 5px #1c3c6012;
+}
+.hero-phone .phone-tabs button.active::after {
+  display: none;
+}
+:root .hero-phone .phone-compact .balance-card {
+  padding: 17px 15px 14px;
+  border: 1px solid #ffffff20;
+  border-radius: 17px;
+  background: radial-gradient(ellipse at 100% 0, #4c83b5a0, transparent 70%),
+    linear-gradient(135deg, #213d63, #16324f);
+  color: #fff;
+  box-shadow: inset 0 1px 0 #ffffff20, 0 7px 15px #16324f22;
+}
+:root .hero-phone .balance-top,
+:root .hero-phone .balance-amount > span:last-child,
+:root .hero-phone .balance-bottom > span:last-child {
+  color: #d7e6f6;
+}
+.hero-phone .balance-amount {
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: -1.5px;
+  margin: 14px 0;
+}
+:root .hero-phone .balance-bottom > span:first-child {
+  color: #b0f8d8;
+  background: #a8f2cf18;
+  padding: 4px 6px;
+}
+:root .hero-phone .balance-waves {
+  stroke: #b8dbff;
+  opacity: 0.2;
+}
+.hero-phone .phone-section-heading {
+  margin: 18px 0 10px;
+}
+.hero-phone .obligation-list {
+  display: grid;
+  gap: 6px;
+}
+.hero-phone .obligation {
+  padding: 7px 8px;
+  gap: 8px;
+  border: 1px solid #dce5f1;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 3px #16324f03;
+}
+.hero-phone .obligation-icon {
+  width: 31px;
+  height: 34px;
+  border-radius: 9px;
+}
+.hero-phone .obligation strong {
+  font-size: 10px;
+  line-height: 1.35;
+}
+.hero-phone .obligation small {
+  font-size: 8px;
+  line-height: 1.4;
+  margin-top: 3px;
+}
+.hero-phone .progress-card {
+  padding: 11px 9px;
+  margin-top: 12px;
+  border-radius: 12px;
+}
+.hero-phone .progress-card strong { font-size: 9px; line-height: 1.45; }
+.hero-phone .progress-card small { font-size: 8px; line-height: 1.5; }
+.hero-phone .mini-progress { height: 4px; }
+.hero-phone .phone-bottom-nav { padding-top: 12px; }
+
+.hero-stage .floating-card {
+  padding: 16px;
+  gap: 12px;
+  border-radius: 17px;
+  box-shadow: 0 12px 32px #17345616, 0 2px 6px #17345608;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stage .reminder-float {
+  max-width: 276px;
+  transform: rotate(4deg) !important;
+  align-items: flex-start;
+}
+.hero-stage .float-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.hero-stage .widget-eyebrow {
+  display: block;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 0.8px;
+  color: #526d8c;
+  margin-bottom: 7px;
+}
+.hero-stage .reminder-float strong { font-size: 11px; line-height: 1.5; }
+.hero-stage .reminder-float p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  justify-content: space-between;
+  font-size: 10px;
+  margin-top: 8px;
+}
+.reminder-float p b { color: var(--ink); font-weight: 650; }
+.widget-due {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  font-size: 9px;
+  color: #23795d;
+}
+.widget-due > span { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.hero-stage .float-time { font-size: 8px; }
+.hero-stage .progress-float { transform: rotate(-3deg) !important; }
+.hero-stage .mini-ring {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  color: #287d65;
+  flex-shrink: 0;
+}
+.mini-ring > svg:first-child { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.mini-ring circle { fill: none; stroke-width: 3; }
+.widget-ring-track { stroke: #dce9e5; }
+.widget-ring-fill { stroke: #37a47e; stroke-linecap: round; }
+.hero-stage .progress-float > div > span { font-size: 10px; }
+.hero-stage .progress-float strong { font-size: 25px; font-weight: 600; }
+.hero-stage .progress-float small { font-size: 9px; }
+.widget-progress { height: 4px; margin-top: 10px; border-radius: 8px; background: #dce9e5; overflow: hidden; }
+.widget-progress > span { display: block; height: 100%; width: 32%; background: #37a47e; border-radius: inherit; }
+
+:root[data-theme="dark"] .hero-phone .phone-tabs { background: #202e43; }
+:root[data-theme="dark"] .hero-phone .phone-tabs button.active { background: #354965; }
+:root[data-theme="dark"] .hero-phone .obligation { background: #1c293c; border-color: #31425c; }
+:root[data-theme="dark"] .hero-stage .widget-eyebrow { color: #a6b3ca; }
+:root[data-theme="dark"] .widget-due,
+:root[data-theme="dark"] .hero-stage .mini-ring { color: #8be5bd; }
+:root[data-theme="dark"] .reminder-float p b { color: #e4e9f1; }
+:root[data-theme="dark"] .widget-ring-track { stroke: #3a4d59; }
+:root[data-theme="dark"] .widget-progress { background: #3a4d59; }
+
+@media (max-width: 1100px) {
+  .hero-stage .floating-card { padding: 12px; gap: 8px; }
+  .hero-stage .reminder-float { max-width: 234px; }
+  .hero-stage .reminder-float strong { font-size: 10px; }
+  .hero-stage .float-icon { width: 30px; height: 32px; }
+}
+@media (max-width: 850px) {
+  .hero-stage { height: 730px; }
+  .hero-stage .reminder-float { top: 115px; max-width: 218px; }
+  .hero-stage .progress-float > div > span { font-size: 9px; }
+  .hero-stage .progress-float strong { font-size: 23px; }
+  .hero-stage .progress-float small { font-size: 8px; }
+}
+@media (max-width: 640px) {
+  .hero-stage { height: 730px; }
+  /* Leave room for the tilted frame's horizontal projection on narrow screens. */
+  .hero-phone { max-width: calc(100vw - 88px); flex-shrink: 0; }
+  /* These cards are decorative; taps should reach the preview below them. */
+  .hero-stage .floating-card { pointer-events: none; }
+  .hero-stage .reminder-float { top: 95px; right: -8px; }
+  .hero-stage .progress-float { bottom: 90px; left: -5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-phone { rotate: -7deg !important; }
+}

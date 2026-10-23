@@ -454,10 +454,13 @@ p {
 }
 .hero-phone {
   position: relative;
+  width: 292px;
   z-index: 2;
   margin-top: 0;
   margin-left: 20px;
-  filter: drop-shadow(12px 27px 22px #2a584521);
+}
+.hero-phone .phone {
+  width: 100%;
 }
 .floating-card {
   position: absolute;
@@ -625,7 +628,7 @@ p {
 /* Interactive product */
 .phone {
   width: 320px;
-  min-height: 645px;
+  height: 680px;
   border: 7px solid #23314a;
   border-radius: 43px;
   background: #f6f7fa;
@@ -640,15 +643,18 @@ p {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  isolation: isolate;
 }
 .phone-compact {
   width: 292px;
-  min-height: 566px;
+  height: 660px;
   border-width: 6px;
   border-radius: 38px;
 }
 .phone-status {
   height: 43px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -666,15 +672,23 @@ p {
   top: 5px;
   transform: translateX(-50%);
   border-radius: 20px;
+  box-shadow: inset 0 1px 2px #ffffff18;
+}
+.phone-island::after {
+  content: "";
+  position: absolute;
+  right: 9px;
+  top: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #54739f, #15243a 45%, #080e18 70%);
+  box-shadow: 0 0 0 2px #ffffff06;
 }
 .status-icons {
   display: flex;
   align-items: center;
   gap: 5px;
-}
-.signal-bars {
-  font-size: 9px;
-  letter-spacing: -1px;
 }
 .battery {
   width: 16px;
@@ -697,6 +711,13 @@ p {
 .phone-content {
   padding: 15px 17px 0;
   flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.phone-content > :is(.phone-greeting, .demo-reminder, .phone-tabs) {
+  flex-shrink: 0;
 }
 .phone-greeting {
   display: flex;
@@ -705,8 +726,8 @@ p {
   margin-bottom: 20px;
 }
 .tiny-muted {
-  font-size: 8px;
-  color: #667ca3;
+  font-size: 10px;
+  color: #526785;
   display: block;
   margin-bottom: 4px;
 }
@@ -760,10 +781,10 @@ p {
   margin-bottom: 16px;
 }
 .phone-tabs button {
-  font-size: 9px;
+  font-size: 11px;
   padding: 0 5px 10px;
   flex: 1;
-  color: #6f84a8;
+  color: #526785;
   position: relative;
 }
 .phone-tabs button.active {
@@ -780,7 +801,30 @@ p {
   left: 15%;
 }
 .phone-view {
-  min-height: 410px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  padding-bottom: 8px;
+}
+/* Hide native scrollbar UI only inside the two app mockups. */
+.phone,
+.phone * {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.phone::-webkit-scrollbar,
+.phone *::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+.phone-view:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+  border-radius: 8px;
 }
 .balance-card {
   background: #d7dee9;
@@ -788,18 +832,20 @@ p {
   overflow: hidden;
   border-radius: 14px;
   padding: 17px 17px 15px;
+  border: 1px solid #8faacf40;
+  box-shadow: inset 0 1px 0 #ffffff80, 0 4px 12px #19345408;
 }
 .balance-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 9px;
+  font-size: 11px;
   color: #485a79;
   position: relative;
   z-index: 1;
 }
 .balance-amount {
-  font-size: 34px;
+  font-size: 38px;
   letter-spacing: -1.6px;
   margin: 12px 0 15px;
   line-height: 1;
@@ -820,7 +866,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 6px;
+  font-size: 8px;
   position: relative;
   z-index: 1;
 }
@@ -853,15 +899,15 @@ p {
   margin: 20px 0 7px;
 }
 .phone-section-heading h4 {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 .phone-section-heading > span {
   display: flex;
   align-items: center;
   gap: 2px;
-  font-size: 7px;
-  color: #677da4;
+  font-size: 9px;
+  color: #526785;
 }
 .obligation {
   display: flex;
@@ -879,6 +925,7 @@ p {
   display: grid;
   place-items: center;
   border-radius: 10px;
+  flex-shrink: 0;
 }
 .emerald {
   background: #d1f5e6;
@@ -894,23 +941,24 @@ p {
 }
 .obligation-label {
   flex: 1;
+  min-width: 0;
 }
 .obligation strong {
-  font-size: 9px;
-  font-weight: 550;
+  font-size: 11px;
+  font-weight: 600;
   display: block;
 }
 .obligation small {
-  font-size: 7px;
+  font-size: 9px;
   display: block;
-  color: #7a8daf;
+  color: #526785;
   margin-top: 4px;
 }
 .obligation-number {
   text-align: right;
 }
 .obligation-number small {
-  color: #56ae89;
+  color: #23795d;
 }
 .obligation-detail {
   font-size: 9px;
@@ -938,18 +986,18 @@ p {
   flex: 1;
 }
 .progress-card strong {
-  font-size: 7px;
+  font-size: 10px;
   display: block;
   font-weight: 550;
 }
 .progress-card small {
-  font-size: 6px;
-  color: #6a80a6;
+  font-size: 9px;
+  color: #526785;
   display: block;
   margin-top: 3px;
 }
 .progress-card > b {
-  font-size: 9px;
+  font-size: 11px;
   color: #54698c;
 }
 .mini-progress {
@@ -966,6 +1014,7 @@ p {
   border-radius: 4px;
 }
 .phone-bottom-nav {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-around;
   padding: 14px 12px 9px;
@@ -978,14 +1027,21 @@ p {
   align-items: center;
   flex-direction: column;
   gap: 5px;
-  font-size: 7px;
-  color: #7e91b1;
+  font-size: 9px;
+  color: #526785;
   min-width: 50px;
 }
 .phone-bottom-nav button.active {
   color: #495b79;
 }
+.phone button:focus-visible,
+.phone input:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 5px;
+}
 .home-indicator {
+  flex-shrink: 0;
   height: 4px;
   background: #223048;
   width: 90px;
@@ -1001,9 +1057,6 @@ p {
 .phone-compact .phone-greeting h3 {
   font-size: 18px;
 }
-.phone-compact .phone-view {
-  min-height: 355px;
-}
 .phone-compact .phone-tabs {
   margin-bottom: 12px;
 }
@@ -1011,7 +1064,7 @@ p {
   padding: 13px 14px 12px;
 }
 .phone-compact .balance-amount {
-  font-size: 31px;
+  font-size: 35px;
   margin: 11px 0;
 }
 .phone-compact .obligation {
@@ -1082,8 +1135,8 @@ p {
 }
 .timeline-item small {
   display: block;
-  font-size: 8px;
-  color: #52a985;
+  font-size: 10px;
+  color: #23795d;
   margin-bottom: 4px;
 }
 .timeline-item strong {
@@ -1096,7 +1149,7 @@ p {
   color: #60779f;
 }
 .timeline-badge {
-  font-size: 7px;
+  font-size: 9px;
   padding: 5px 7px;
   background: #dfe4ed;
   border-radius: 5px;
@@ -1104,11 +1157,11 @@ p {
 }
 .timeline-badge.soon {
   background: #cff2e3;
-  color: #4fa481;
+  color: #23795d;
 }
 .phone-note {
-  font-size: 8px;
-  color: #6e83a8;
+  font-size: 10px;
+  color: #526785;
   line-height: 1.65;
   margin-top: 14px;
 }
@@ -1157,7 +1210,7 @@ p {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  font-size: 9px;
+  font-size: 11px;
   margin: 12px 0;
 }
 .range-heading strong {
@@ -1171,8 +1224,8 @@ p {
 .range-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 7px;
-  color: #7489ac;
+  font-size: 10px;
+  color: #526785;
   margin-top: 9px;
 }
 .plan-insight {
@@ -1182,7 +1235,7 @@ p {
   background: #dfe5ef;
   border-radius: 8px;
   padding: 12px 10px;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.7;
   color: #4f6283;
   margin-top: 18px;
@@ -2294,7 +2347,7 @@ p {
     font-size: 88px;
   }
   .hero-phone {
-    scale: 1.05;
+    width: 306px;
   }
   .reminder-float {
     right: 0;
@@ -2337,7 +2390,7 @@ p {
     height: 610px;
   }
   .hero-phone {
-    scale: 0.92;
+    width: 280px;
     margin-left: 0;
   }
   .reminder-float {
@@ -2448,7 +2501,7 @@ p {
     gap: 0;
   }
   .hero-phone {
-    scale: 0.84;
+    width: 264px;
     transform-origin: center;
   }
   .reminder-float {
@@ -2632,6 +2685,71 @@ p {
   }
 }
 @media (max-width: 640px) {
+  /* Let mobile tracks shrink below their contents' intrinsic widths. */
+  .hero-grid > *,
+  .experience-grid > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .experience-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .experience-phone-stage {
+    width: 100%;
+  }
+  .phone {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .phone :is(.phone-content, .phone-view, .timeline-view, .plan-view) {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .phone :is(.phone-greeting > div, .phone-tabs button,
+    .phone-section-heading > *, .obligation-label, .obligation-number,
+    .progress-card > div, .timeline-item > div:nth-child(2),
+    .range-heading > *, .plan-insight > span) {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .phone :is(.phone-greeting, .phone-section-heading, .balance-top, .balance-bottom) {
+    gap: 6px;
+  }
+  .phone :is(.phone-note, .obligation-detail, .timeline-summary) {
+    overflow-wrap: anywhere;
+  }
+  .phone .obligation {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, auto);
+  }
+  .phone .obligation-detail {
+    grid-column: 1 / -1;
+  }
+  .phone :is(.timeline-dot, .timeline-badge, .progress-icon, .plan-insight > svg) {
+    flex-shrink: 0;
+  }
+  .phone .timeline-item {
+    gap: 9px;
+  }
+  .phone .plan-ring {
+    max-width: 100%;
+  }
+  .phone .plan-view input[type="range"] {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .phone .phone-bottom-nav button {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+  }
+  .back-to-top {
+    flex-shrink: 0;
+  }
   html {
     scroll-padding-top: 78px;
   }
@@ -2744,12 +2862,12 @@ p {
   }
   .hero-stage {
     width: 100%;
-    height: 560px;
+    height: 630px;
     margin-top: 5px;
   }
   .hero-phone {
-    scale: 0.85;
-    margin-top: -15px;
+    width: 280px;
+    margin-top: 0;
     margin-left: 5px;
   }
   .orbit {
@@ -3273,10 +3391,10 @@ p {
     font-size: 9px;
   }
   .hero-stage {
-    height: 530px;
+    height: 630px;
   }
   .hero-phone {
-    scale: 0.8;
+    width: 264px;
   }
   .reminder-float {
     right: -10px;

@@ -14,6 +14,7 @@ import {
   House,
   LayoutGrid,
   SlidersHorizontal,
+  Signal,
   Sparkles,
   Wifi,
   Zap,
@@ -95,7 +96,7 @@ export function PhonePreview({
         <span>9:41</span>
         <div className="phone-island" />
         <span className="status-icons">
-          <span className="signal-bars">▂▃▅</span>
+          <Signal size={14} strokeWidth={2.5} aria-hidden="true" />
           <Wifi size={13} />
           <span className="battery" />
         </span>
@@ -159,6 +160,9 @@ export function PhonePreview({
             exit={{ opacity: 0, x: reduce ? 0 : -12 }}
             transition={{ duration: 0.2 }}
             className="phone-view"
+            role="region"
+            aria-label={t("App preview content", "აპის დემოს შიგთავსი")}
+            tabIndex={0}
           >
             {tab === "overview" && (
               <>

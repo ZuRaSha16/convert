@@ -11,6 +11,8 @@ npm run dev
 
 Open http://localhost:3000. Run `npm run lint` and `npm run build` before deployment.
 
+Run `npm run test:layout` after building to check both phone previews at 320, 375, 390, and 430px. The Playwright suite uses installed Google Chrome, covers English/Georgian, light/dark themes and tab transitions, and verifies the original desktop geometry. It starts a production server on port 3100; set `LAYOUT_BASE_URL` to use another local port.
+
 ## Features
 
 - English and Georgian interface with a browser-saved language preference.

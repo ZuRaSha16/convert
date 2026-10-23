@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Georgian } from "next/font/google";
 import "./globals.css";
 import "./themes.css";
+import "./hero-preview.css";
 import "./feature-motion.css";
 import "./ambient-motion.css";
 

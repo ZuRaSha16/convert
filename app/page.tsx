@@ -142,23 +142,12 @@ function Landing({
   const [faq, setFaq] = useState<number | null>(0);
   const privacyRef = useRef<HTMLDialogElement>(null);
   const heroRef = useRef<HTMLElement>(null);
-  const previewRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const { scrollYProgress: previewProgress } = useScroll({
-    target: previewRef,
-    offset: ["start end", "end start"],
-  });
   const heroY = useTransform(heroProgress, [0, 1], [0, 100]);
-  const heroRotate = useTransform(heroProgress, [0, 1], [-8, 0]);
-  const previewScale = useTransform(
-    previewProgress,
-    [0, 0.45, 1],
-    [0.88, 1.03, 1],
-  );
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const lightX = useSpring(mouseX, { stiffness: 45, damping: 25 });
@@ -357,9 +346,9 @@ function Landing({
                 </div>
                 <motion.div
                   className="hero-phone"
-                  style={reduce ? undefined : { y: heroY, rotate: heroRotate }}
-                  initial={{ opacity: 0, scale: 0.88 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  style={reduce ? undefined : { y: heroY }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{
                     duration: 1,
                     delay: 0.2,
@@ -378,18 +367,19 @@ function Landing({
                     <Bell size={18} />
                   </span>
                   <div>
+                    <span className="widget-eyebrow">
+                      {t("PAYMENT REMINDER", "გადახდის შეხსენება")}
+                    </span>
                     <strong>
                       {t(
                         "One less thing to remember.",
                         "ერთი საზრუნავით ნაკლები.",
                       )}
                     </strong>
-                    <p>
-                      {t(
-                        "Your next payment, right on time.",
-                        "შემდეგი გადახდა, ზუსტად დროულად.",
-                      )}
-                    </p>
+                    <p>{t("Personal loan", "პირადი სესხი")} <b>₾450.00</b></p>
+                    <span className="widget-due">
+                      <span />{t("Due in 3 days", "ვადა 3 დღეში")}
+                    </span>
                   </div>
                   <span className="float-time">{t("now", "ახლა")}</span>
                 </motion.div>
@@ -400,6 +390,10 @@ function Landing({
                   transition={{ duration: 0.7, delay: 0.9 }}
                 >
                   <span className="mini-ring">
+                    <svg viewBox="0 0 48 48" aria-hidden="true">
+                      <circle className="widget-ring-track" cx="24" cy="24" r="20" />
+                      <circle className="widget-ring-fill" cx="24" cy="24" r="20" pathLength="100" strokeDasharray="32 100" />
+                    </svg>
                     <Check size={17} />
                   </span>
                   <div>
@@ -415,6 +409,7 @@ function Landing({
                         {t("closer to freedom", "უფრო ახლოს თავისუფლებასთან")}
                       </small>
                     </strong>
+                    <div className="widget-progress" aria-hidden="true"><span /></div>
                   </div>
                   <Sparkles size={15} />
                 </motion.div>
@@ -555,7 +550,6 @@ function Landing({
           <section
             className="experience-section section-padding"
             id="experience"
-            ref={previewRef}
           >
             <AmbientBackground variant="immersive" seed={3} />
             <FlowArtwork dark />
@@ -640,10 +634,7 @@ function Landing({
                   {t("GO ON, TRY THE PREVIEW", "სცადე ინტერაქტიული დემო")}
                 </span>
               </div>
-              <motion.div
-                className="experience-phone-stage"
-                style={reduce ? undefined : { scale: previewScale }}
-              >
+              <div className="experience-phone-stage">
                 <div className="preview-halo" />
                 <PhonePreview tab={tab} onTabChange={setTab} />
                 <div className="preview-footnote">
@@ -657,7 +648,7 @@ function Landing({
                     "გამოგონილი თანხები. ცოცხალი კავშირებისა და გადახდების გარეშე.",
                   )}
                 </div>
-              </motion.div>
+              </div>
             </div>
           </section>
 
