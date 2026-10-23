@@ -1,0 +1,65 @@
+/* Shared edge colors let neighboring sections meet without a visible seam. */
+:root {
+  --section-fade: clamp(48px, 7vw, 96px);
+  --strip-tint: #eaf1fc;
+  --experience-tint: #1b2639;
+  --how-tint: #eaf1fb;
+  --waitlist-tint: #e8f1ff;
+}
+:root[data-theme="dark"] {
+  --strip-tint: #161e2d;
+  --experience-tint: #0d1625;
+  --how-tint: #161f2f;
+  --waitlist-tint: #192334;
+}
+.obligations-strip { --section-tint: var(--strip-tint); --section-fade: 24px; }
+.experience-section {
+  --section-tint: var(--experience-tint);
+  --section-fade: clamp(112px, 14vw, 192px);
+  padding-block: calc(var(--section-fade) + 24px);
+}
+.how-section { --section-tint: var(--how-tint); }
+.waitlist-section { --section-tint: var(--waitlist-tint); }
+
+:root[data-theme] :is(.obligations-strip, .experience-section, .how-section, .waitlist-section) {
+  border-block: 0;
+  background-color: var(--section-tint);
+  background-image:
+    linear-gradient(to bottom,
+      var(--paper),
+      color-mix(in srgb, var(--paper) 90%, transparent) 20%,
+      color-mix(in srgb, var(--paper) 50%, transparent) 50%,
+      color-mix(in srgb, var(--paper) 10%, transparent) 80%,
+      transparent),
+    linear-gradient(to top,
+      var(--paper),
+      color-mix(in srgb, var(--paper) 90%, transparent) 20%,
+      color-mix(in srgb, var(--paper) 50%, transparent) 50%,
+      color-mix(in srgb, var(--paper) 10%, transparent) 80%,
+      transparent);
+  background-size: 100% var(--section-fade);
+  background-position: top, bottom;
+  background-repeat: no-repeat;
+}
+
+/* Fade only decorative layers; foreground content stays fully opaque. */
+.ambient-background {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--section-fade), #000 calc(100% - var(--section-fade)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--section-fade), #000 calc(100% - var(--section-fade)), transparent);
+}
+.experience-section::after {
+  /* This legacy glow reached the section's clipped top edge. The masked
+     ambient layer already supplies the same soft blue light. */
+  content: none;
+}
+.waitlist-section::before {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--section-fade), #000 calc(100% - var(--section-fade)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--section-fade), #000 calc(100% - var(--section-fade)), transparent);
+}
+:root[data-theme] :is(.hero-bottom, .footer-bottom) {
+  border-top: 0;
+}
+
+@media (max-width: 640px) {
+  :root { --section-fade: 48px; }
+}

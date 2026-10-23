@@ -12,9 +12,7 @@ import {
   MotionConfig,
   motion,
   useMotionValue,
-  useScroll,
   useSpring,
-  useTransform,
 } from "motion/react";
 import { useReducedMotion } from "@/components/use-reduced-motion";
 import {
@@ -142,13 +140,7 @@ function Landing({
   const [tab, setTab] = useState<PreviewTab>("overview");
   const [faq, setFaq] = useState<number | null>(0);
   const privacyRef = useRef<HTMLDialogElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress: heroProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroY = useTransform(heroProgress, [0, 1], [0, 100]);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const lightX = useSpring(mouseX, { stiffness: 45, damping: 25 });
@@ -244,7 +236,6 @@ function Landing({
         <main id="main">
           <section
             id="home"
-            ref={heroRef}
             className="hero"
             onPointerMove={(event) => {
               if (!reduce && event.pointerType === "mouse") {
@@ -347,13 +338,19 @@ function Landing({
                 </div>
                 <motion.div
                   className="hero-phone"
-                  style={reduce ? undefined : { y: heroY }}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
+                  whileHover={reduce ? undefined : { x: 3, y: -5, rotate: 1 }}
                   transition={{
-                    duration: 1,
-                    delay: 0.2,
-                    ease: [0.16, 1, 0.3, 1],
+                    type: "spring",
+                    stiffness: 150,
+                    damping: 24,
+                    opacity: {
+                      type: "tween",
+                      duration: 1,
+                      delay: 0.2,
+                      ease: [0.16, 1, 0.3, 1],
+                    },
                   }}
                 >
                   <PhonePreview compact />
