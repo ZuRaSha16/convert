@@ -15,7 +15,7 @@ for (const width of [390, 1440]) {
         await button.press("Enter");
         const content = phone.locator([".balance-card", ".timeline-view", ".plan-view"][tab]);
         await expect(content).toBeVisible();
-        const view = phone.locator(".phone-view");
+        const view = phone.locator(".phone-view[aria-hidden='false']");
         const scrollbar = await view.evaluate(view => {
           const style = getComputedStyle(view);
           const webkit = getComputedStyle(view, "::-webkit-scrollbar");

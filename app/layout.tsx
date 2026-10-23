@@ -1,24 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Georgian } from "next/font/google";
+import { themeInitializationScript } from "@/lib/theme";
 import "./globals.css";
-import "./themes.css";
 import "./hero-preview.css";
 import "./feature-motion.css";
 import "./scene-motion.css";
 import "./site-scene.css";
-
-// Resolve the palette before paint. Only the root attribute is changed before
-// hydration; the toggle uses an identical server/first-client snapshot.
-const themeScript = `(() => {
-  let theme;
-  try { theme = localStorage.getItem('convert-theme'); } catch {}
-  if (theme !== 'dark' && theme !== 'light') {
-    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-  document.documentElement.dataset.theme = theme;
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = theme === 'dark' ? '#111b2c' : '#f6f8fc';
-})();`;
+import "./themes.css";
+import "./clarity-network.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,10 +47,10 @@ export const metadata: Metadata = {
       "One calm space for your financial obligations. Coming soon to Georgia.",
   },
   robots: { index: true, follow: true },
-  icons: { icon: "/icon.svg", apple: "/icon.svg" },
+  icons: { icon: "/icon.svg", apple: "/apple-touch-icon.png" },
 };
 export const viewport: Viewport = {
-  themeColor: "#f6f8fc",
+  themeColor: "#f5efdf",
   width: "device-width",
   initialScale: 1,
 };
@@ -76,7 +65,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${georgian.variable}`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: themeInitializationScript }} />
       </head>
       <body>{children}</body>
     </html>

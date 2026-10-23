@@ -42,7 +42,7 @@ export function SiteBackground() {
         className="atmosphere-light-field"
         style={reduce ? undefined : { x, y }}
       >
-        <div className="atmosphere-light atmosphere-light-emerald" />
+        <div className="atmosphere-light atmosphere-light-accent" />
         <div className="atmosphere-light atmosphere-light-blue" />
       </motion.div>
       <svg

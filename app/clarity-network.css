@@ -1,0 +1,89 @@
+.clarity-network {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 240px;
+  margin-block: -40px;
+}
+.network-connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+}
+.network-connections path {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.network-line { stroke: var(--accent-strong); stroke-width: 1; opacity: 0.17; }
+.network-line-glow { stroke: var(--glow-edge); stroke-width: 1; opacity: 0.7; }
+.network-current {
+  stroke: var(--glow-highlight);
+  stroke-width: 1.25;
+  stroke-dasharray: 0.07 0.93;
+  opacity: 0.55;
+  animation: network-current 8s linear infinite;
+}
+.network-widget {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: clamp(118px, 17%, 158px);
+  min-height: 44px;
+  padding: 11px 12px;
+  border: 1px solid var(--glow-edge);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.45;
+  box-shadow: 0 4px 14px var(--shadow-color), 0 0 16px color-mix(in srgb, var(--glow-soft) 35%, transparent);
+}
+.network-widget::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(80px circle at 50% 0, var(--glow-soft), transparent 72%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+.network-widget svg { color: var(--accent-strong); }
+.network-widget span { position: relative; min-width: 0; overflow-wrap: anywhere; }
+.network-widget-loan { left: 6%; top: 22px; }
+.network-widget-bills { left: 20%; bottom: 20px; }
+.network-widget-taxes { left: 42%; top: 6px; }
+.network-widget-deadlines { left: 70%; bottom: 0; }
+.clarity-network .network-picture {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-color: var(--glow-edge);
+  box-shadow: 0 8px 20px var(--shadow-color), 0 0 18px color-mix(in srgb, var(--glow-soft) 30%, transparent);
+}
+@keyframes network-current { to { stroke-dashoffset: -1; } }
+@media (max-width: 640px) {
+  .clarity-network { height: auto; min-height: 270px; margin-block: 0; padding-top: 186px; }
+  .network-widget { width: min(44%, 148px); min-height: 44px; padding: 10px; font-size: 10px; gap: 7px; }
+  .network-widget svg { width: 14px; height: 14px; }
+  .network-widget-loan { left: 2%; top: 0; }
+  .network-widget-bills { left: auto; right: 0; top: 40px; bottom: auto; }
+  .network-widget-taxes { left: 0; top: 86px; }
+  .network-widget-deadlines { left: auto; right: 4%; top: 128px; bottom: auto; }
+  .clarity-network .network-picture { position: relative; top: auto; right: auto; transform: none; margin-inline: auto; }
+}
+@media (max-width: 360px) {
+  .clarity-network { padding-top: 234px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .network-current { display: none; animation: none; }
+}

@@ -2,35 +2,38 @@
 
 import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
+import { isTheme, resolveTheme, themes, themeStorageKey, themeMediaQuery, type Theme } from "@/lib/theme";
 import { useCopy } from "./language";
 
-type Theme = "light" | "dark";
-const storageKey = "convert-theme";
-const mediaQuery = "(prefers-color-scheme: dark)";
+let sessionTheme: Theme | undefined;
 
 function preferredTheme(): Theme {
+  if (sessionTheme) return sessionTheme;
   try {
-    const saved = localStorage.getItem(storageKey);
-    if (saved === "light" || saved === "dark") return saved;
+    const saved = resolveTheme(localStorage.getItem(themeStorageKey));
+    if (saved) return saved;
   } catch {
     // System preference still works when browser storage is unavailable.
   }
-  return window.matchMedia(mediaQuery).matches ? "dark" : "light";
+  return window.matchMedia(themeMediaQuery).matches ? "dark" : "light";
 }
 
 function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute("content", theme === "dark" ? "#111b2c" : "#f6f8fc");
+    ?.setAttribute("content", themes.find((option) => option.id === theme)!.color);
   window.dispatchEvent(new Event("convert-theme-change"));
 }
 
 function subscribe(callback: () => void) {
-  const media = window.matchMedia(mediaQuery);
+  const media = window.matchMedia(themeMediaQuery);
   const syncPreference = () => applyTheme(preferredTheme());
   const syncStorage = (event: StorageEvent) => {
-    if (event.key === storageKey || event.key === null) syncPreference();
+    if (event.key === themeStorageKey || event.key === null) {
+      sessionTheme = undefined;
+      syncPreference();
+    }
   };
   window.addEventListener("convert-theme-change", callback);
   window.addEventListener("storage", syncStorage);
@@ -44,7 +47,18 @@ function subscribe(callback: () => void) {
 }
 
 function getSnapshot(): Theme {
-  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  const theme = document.documentElement.dataset.theme;
+  return isTheme(theme) ? theme : "light";
+}
+
+function selectTheme(next: Theme) {
+  sessionTheme = next;
+  try {
+    localStorage.setItem(themeStorageKey, next);
+  } catch {
+    // The toggle remains usable for the current page without storage.
+  }
+  applyTheme(next);
 }
 
 export function ThemeToggle() {
@@ -55,27 +69,23 @@ export function ThemeToggle() {
     () => "light" as Theme,
   );
 
-  function toggle() {
-    const next = getSnapshot() === "dark" ? "light" : "dark";
-    try {
-      localStorage.setItem(storageKey, next);
-    } catch {
-      // The switch remains usable for the current page without storage.
-    }
-    applyTheme(next);
-  }
-
   return (
     <button
       type="button"
       className="theme-toggle"
-      onClick={toggle}
+      onClick={() => selectTheme(getSnapshot() === "dark" ? "light" : "dark")}
       aria-label={t("Dark mode", "მუქი რეჟიმი")}
       aria-pressed={theme === "dark"}
-      title={t("Toggle dark mode", "მუქი რეჟიმის გადართვა")}
+      title={theme === "dark"
+        ? t("Switch to light theme", "ღია თემაზე გადართვა")
+        : t("Switch to dark theme", "მუქ თემაზე გადართვა")}
     >
-      <Moon className="theme-icon-moon" size={17} aria-hidden="true" />
-      <Sun className="theme-icon-sun" size={17} aria-hidden="true" />
+      <span className="theme-mode-icon" data-mode="dark" data-active={theme === "dark"} aria-hidden="true">
+        <Moon size={15} />
+      </span>
+      <span className="theme-mode-icon" data-mode="light" data-active={theme === "light"} aria-hidden="true">
+        <Sun size={15} />
+      </span>
     </button>
   );
 }

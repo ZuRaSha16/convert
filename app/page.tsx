@@ -27,7 +27,6 @@ import {
   Smartphone,
   Sparkles,
   X,
-  Zap,
 } from "lucide-react";
 import { LanguageContext, useCopy, type Language } from "@/components/language";
 import { PhonePreview, type PreviewTab } from "@/components/phone-preview";
@@ -36,6 +35,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { FeatureCard } from "@/components/feature-card";
 import { SiteBackground } from "@/components/site-background";
 import { GlowLink } from "@/components/glow-link";
+import { LogoMark } from "@/components/logo-mark";
+import { ClarityNetwork } from "@/components/clarity-network";
 
 function Brand({ light = false }: { light?: boolean }) {
   return (
@@ -44,10 +45,7 @@ function Brand({ light = false }: { light?: boolean }) {
       className={`brand ${light ? "brand-light" : ""}`}
       aria-label="Convert home"
     >
-      <span className="brand-symbol" aria-hidden="true">
-        <i />
-        <i />
-      </span>
+      <LogoMark className="brand-symbol" />
       convert<span className="brand-period">.</span>
     </a>
   );
@@ -454,43 +452,7 @@ function Landing({
                 </Reveal>
               </div>
               <Reveal className="clarity-diagram">
-                <div className="scattered-items">
-                  <span className="scattered-item">
-                    <CreditCard size={17} />
-                    {t("Your loans", "შენი სესხები")}
-                  </span>
-                  <span className="scattered-item">
-                    <Zap size={17} />
-                    {t("Monthly bills", "თვიური ქვითრები")}
-                  </span>
-                  <span className="scattered-item">
-                    <Bell size={17} />
-                    {t("That deadline…", "ის გადახდის ვადა…")}
-                  </span>
-                </div>
-                <div className="converging-lines" aria-hidden="true">
-                  <svg viewBox="0 0 440 130" preserveAspectRatio="none">
-                    <path d="M0 5 C180 5 230 65 440 65" />
-                    <path d="M0 65 H440" />
-                    <path d="M0 125 C180 125 230 65 440 65" />
-                    <path className="moving-line" d="M0 65 H440" />
-                  </svg>
-                </div>
-                <div className="clarity-destination">
-                  <span className="brand-symbol" aria-hidden="true">
-                    <i />
-                    <i />
-                  </span>
-                  <div>
-                    <strong>
-                      {t("One clear picture.", "ერთი ნათელი სურათი.")}
-                    </strong>
-                    <span>
-                      {t("A little more in control.", "ცოტა მეტი კონტროლი.")}
-                    </span>
-                  </div>
-                  <Check size={18} />
-                </div>
+                <ClarityNetwork />
               </Reveal>
             </div>
           </section>
@@ -706,7 +668,9 @@ function Landing({
                     )}
                   </p>
                   <div className="notification-demo">
-                    <div className="notification-logo">c.</div>
+                    <div className="notification-logo" aria-hidden="true">
+                      <LogoMark width={26} height={26} />
+                    </div>
                     <div>
                       <strong>
                         convert{" "}
@@ -750,10 +714,10 @@ function Landing({
                           x2="0"
                           y2="1"
                         >
-                          <stop stopColor="#6ee7b7" stopOpacity=".2" />
+                          <stop stopColor="var(--accent-strong)" stopOpacity=".2" />
                           <stop
                             offset="1"
-                            stopColor="#6ee7b7"
+                            stopColor="var(--accent-strong)"
                             stopOpacity="0"
                           />
                         </linearGradient>
@@ -768,7 +732,7 @@ function Landing({
                         pathLength="1"
                         d="M0 10 C60 10 40 35 100 35 S145 50 200 60 S260 72 300 78 S350 88 400 95"
                         fill="none"
-                        stroke="#34d399"
+                        stroke="var(--accent-strong)"
                         strokeWidth="2.5"
                       />
                     </svg>

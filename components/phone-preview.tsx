@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AnimatePresence, motion, useIsPresent } from "motion/react";
 import { useReducedMotion } from "./use-reduced-motion";
+import { motionEase, motionTiming, staggerContent, stopEntryMotion } from "./motion-style";
 import {
   ArrowDownLeft,
   ArrowUpRight,
@@ -22,6 +23,59 @@ import {
 import { useCopy } from "./language";
 
 export type PreviewTab = "overview" | "timeline" | "plan";
+const previewTabs: PreviewTab[] = ["overview", "timeline", "plan"];
+
+type ViewMotion = { direction: number; reduce: boolean };
+const viewVariants = {
+  enter: ({ direction, reduce }: ViewMotion) => ({ opacity: reduce ? 1 : 0, x: reduce ? 0 : direction * 16 }),
+  visible: { opacity: 1, x: 0 },
+  exit: ({ direction, reduce }: ViewMotion) => ({
+    opacity: reduce ? 1 : 0,
+    x: reduce ? 0 : direction * -12,
+    transition: { duration: reduce ? 0 : motionTiming.detail, ease: motionEase },
+  }),
+};
+
+function PreviewView({ children, label, tab, direction, reduce, revealContent }: {
+  children: ReactNode;
+  label: string;
+  tab: PreviewTab;
+  direction: number;
+  reduce: boolean;
+  revealContent: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const present = useIsPresent();
+  useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+    if (revealContent && present && !reduce) {
+      staggerContent(root.querySelector(".timeline-view, .plan-view") ?? root, { direction, axis: "x" });
+    }
+    return () => stopEntryMotion(root);
+  }, [direction, present, reduce, revealContent]);
+
+  return (
+    <motion.div
+      ref={ref}
+      custom={{ direction, reduce }}
+      variants={viewVariants}
+      initial="enter"
+      animate="visible"
+      exit="exit"
+      transition={{ duration: reduce ? 0 : motionTiming.panel, ease: motionEase }}
+      className="phone-view"
+      data-preview-tab={tab}
+      role="region"
+      aria-label={label}
+      aria-hidden={!present}
+      inert={!present}
+      tabIndex={present ? 0 : -1}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function PhonePreview({
   tab: controlledTab,
@@ -39,6 +93,15 @@ export function PhonePreview({
   const reduce = useReducedMotion();
   const t = useCopy();
   const tab = controlledTab ?? localTab;
+  const [navigation, setNavigation] = useState({ tab, direction: 1, hasNavigated: false });
+  // Also track changes made by the experience section's external controls.
+  if (navigation.tab !== tab) {
+    setNavigation({
+      tab,
+      direction: previewTabs.indexOf(tab) > previewTabs.indexOf(navigation.tab) ? 1 : -1,
+      hasNavigated: true,
+    });
+  }
   const changeTab = (next: PreviewTab) => {
     setLocalTab(next);
     onTabChange?.(next);
@@ -152,17 +215,15 @@ export function PhonePreview({
             </button>
           ))}
         </div>
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
+        <div className="phone-view-stage" data-motion-direction={navigation.direction}>
+        <AnimatePresence mode="sync" initial={false} custom={{ direction: navigation.direction, reduce }}>
+          <PreviewView
             key={tab}
-            initial={{ opacity: 0, x: reduce ? 0 : 12 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: reduce ? 0 : -12 }}
-            transition={{ duration: 0.2 }}
-            className="phone-view"
-            role="region"
-            aria-label={t("App preview content", "აპის დემოს შიგთავსი")}
-            tabIndex={0}
+            tab={tab}
+            direction={navigation.direction}
+            reduce={reduce}
+            revealContent={navigation.hasNavigated}
+            label={t("App preview content", "აპის დემოს შიგთავსი")}
           >
             {tab === "overview" && (
               <>
@@ -243,10 +304,11 @@ export function PhonePreview({
                     </small>
                     <div className="mini-progress">
                       <motion.span
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "32%" }}
+                        style={{ width: "32%" }}
+                        initial={{ scaleX: reduce ? 1 : 0 }}
+                        whileInView={{ scaleX: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: reduce ? 0 : 1.2 }}
+                        transition={{ duration: reduce ? 0 : motionTiming.reveal, ease: motionEase }}
                       />
                     </div>
                   </div>
@@ -311,7 +373,7 @@ export function PhonePreview({
                       className="ring-fill"
                       strokeDasharray="471"
                       animate={{ strokeDashoffset: 471 * (1 - payment / 1500) }}
-                      transition={{ duration: reduce ? 0 : 0.4 }}
+                      transition={{ duration: reduce ? 0 : motionTiming.reveal, ease: motionEase }}
                     />
                   </svg>
                   <div>
@@ -319,6 +381,7 @@ export function PhonePreview({
                       key={months}
                       initial={{ opacity: 0.3 }}
                       animate={{ opacity: 1 }}
+                      transition={{ duration: reduce ? 0 : 0.3, ease: motionEase }}
                     >
                       {months}
                     </motion.strong>
@@ -361,8 +424,9 @@ export function PhonePreview({
                 </p>
               </div>
             )}
-          </motion.div>
+          </PreviewView>
         </AnimatePresence>
+        </div>
       </div>
       <div className="phone-bottom-nav">
         {([LayoutGrid, CalendarDays, SlidersHorizontal] as const).map(

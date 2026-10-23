@@ -1,11 +1,5 @@
 /* One viewport-sized atmosphere persists behind the entire scrolling page. */
 .site-atmosphere {
-  --scene-end: #eef3fa;
-  --scene-emerald-light: #34d39912;
-  --scene-blue-light: #6e9bd51a;
-  --scene-particle: #168364;
-  --scene-particle-opacity: 0.2;
-  --scene-path: #5e94ba;
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -14,14 +8,6 @@
   user-select: none;
   contain: strict;
   background: linear-gradient(135deg, var(--paper), var(--scene-end));
-}
-:root[data-theme="dark"] .site-atmosphere {
-  --scene-end: #101f31;
-  --scene-emerald-light: #34d39913;
-  --scene-blue-light: #629ce91c;
-  --scene-particle: #90dcc4;
-  --scene-particle-opacity: 0.3;
-  --scene-path: #86c8e0;
 }
 .atmosphere-light-field {
   position: absolute;
@@ -32,12 +18,12 @@
   width: 95vw;
   height: 110vh;
 }
-.atmosphere-light-emerald {
+.atmosphere-light-accent {
   right: -30%;
   top: -38%;
   background: radial-gradient(
     ellipse,
-    var(--scene-emerald-light),
+    var(--scene-accent-light),
     transparent 68%
   );
   animation: scene-light-drift 28s ease-in-out infinite alternate;

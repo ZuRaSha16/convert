@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { LogoMark } from "@/components/logo-mark";
 
 export const alt =
   "Convert — Less juggling. More living. A clearer financial future for Georgia.";
@@ -20,7 +21,8 @@ export default function Image() {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", width: 760 }}>
-        <div style={{ display: "flex", fontSize: 36, letterSpacing: -2 }}>
+        <div style={{ display: "flex", alignItems: "center", fontSize: 36, letterSpacing: -2 }}>
+          <LogoMark width={44} height={44} style={{ marginRight: 10 }} />
           convert<span style={{ color: "#6ee7b7" }}>.</span>
         </div>
         <div
@@ -108,9 +110,7 @@ export default function Image() {
             <span style={{ fontSize: 14, color: "#5f779a" }}>
               A little more in control.
             </span>
-            <span style={{ fontSize: 47, marginTop: 18, letterSpacing: -2 }}>
-              convert.
-            </span>
+            <LogoMark width={64} height={55} style={{ marginTop: 18 }} />
             <span style={{ fontSize: 14, color: "#5f779a", marginTop: 14 }}>
               A lot more you.
             </span>

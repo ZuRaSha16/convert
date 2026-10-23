@@ -77,7 +77,7 @@ for (const width of [320, 375, 390, 430]) {
                 frameFits: rect.left >= -1 && rect.right <= innerWidth + 1,
               };
             });
-            expect(layout).toEqual({ viewFits: true, contentFits: true, frameFits: true });
+            expect(layout, `${model}, tab ${tab}`).toEqual({ viewFits: true, contentFits: true, frameFits: true });
 
             if (language === "ka" && colorScheme === "light" && testInfo.project.name === "mobile-reduced-motion") {
               await phone.screenshot({ path: testInfo.outputPath(`${model.includes("hero") ? "hero" : "experience"}-${tab}.png`) });

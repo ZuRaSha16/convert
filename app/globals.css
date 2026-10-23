@@ -239,25 +239,11 @@ p {
   line-height: 1;
 }
 .brand-symbol {
-  position: relative;
   width: 31px;
   height: 28px;
-  display: inline-block;
+  display: block;
+  flex-shrink: 0;
   margin-right: 9px;
-}
-.brand-symbol i {
-  position: absolute;
-  width: 25px;
-  height: 12px;
-  border: 5px solid var(--accent);
-  transform: rotate(-44deg);
-  border-radius: 8px;
-  left: 0;
-  top: 4px;
-}
-.brand-symbol i:last-child {
-  left: 7px;
-  top: 13px;
 }
 .brand-period {
   color: var(--accent);
@@ -1656,7 +1642,7 @@ p {
   width: 35px;
   height: 35px;
   flex-shrink: 0;
-  background: var(--accent);
+  background: #0d1b2c;
   border-radius: 9px;
   display: grid;
   place-items: center;
