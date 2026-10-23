@@ -30,8 +30,11 @@ function trackGlow(event: PointerEvent<HTMLElement>) {
 }
 
 function centerGlow(event: FocusEvent<HTMLElement>) {
-  event.currentTarget.style.removeProperty("--glow-x");
-  event.currentTarget.style.removeProperty("--glow-y");
+  // Pointer clicks also focus the control. Keep the pointer's coordinates
+  // instead of resetting a hovered glow when that focus event fires.
+  if (event.currentTarget.matches(":hover")) return;
+  event.currentTarget.style.setProperty("--glow-x", "50%");
+  event.currentTarget.style.setProperty("--glow-y", "50%");
 }
 
 export function GlowLink({
@@ -46,6 +49,7 @@ export function GlowLink({
       className={`glow-control glow-link ${className}`}
       style={{ ...glassStyle, ...style }}
       onPointerMove={trackGlow}
+      onPointerDown={trackGlow}
       onFocus={centerGlow}
     >
       {children}
@@ -65,6 +69,7 @@ export function GlowButton({
       className={`glow-control glow-button ${className}`}
       style={{ ...glassStyle, ...style }}
       onPointerMove={trackGlow}
+      onPointerDown={trackGlow}
       onFocus={centerGlow}
     >
       {children}
