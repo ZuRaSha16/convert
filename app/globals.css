@@ -786,6 +786,21 @@ p {
   bottom: -1px;
   left: 15%;
 }
+/* Constrain tab panels to the remaining phone screen, including transitions. */
+.phone-view-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  isolation: isolate;
+}
+.phone-view-stage > .phone-view {
+  position: absolute;
+  inset: 0;
+}
+.phone-view[aria-hidden="true"] {
+  pointer-events: none;
+}
 .phone-view {
   flex: 1;
   min-height: 0;

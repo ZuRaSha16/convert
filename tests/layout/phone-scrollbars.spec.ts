@@ -32,6 +32,10 @@ for (const width of [390, 1440]) {
           await view.focus();
           await view.press("End");
           await expect.poll(() => view.evaluate(view => view.scrollTop)).toBeGreaterThan(0);
+          await view.evaluate(view => { view.scrollTop = 0; });
+          await view.hover({ position: { x: 20, y: 30 } });
+          await page.mouse.wheel(0, 140);
+          await expect.poll(() => view.evaluate(view => view.scrollTop)).toBeGreaterThan(0);
         }
       }
     }
