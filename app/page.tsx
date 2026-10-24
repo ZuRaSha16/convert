@@ -16,16 +16,12 @@ import {
   Check,
   ChevronDown,
   CreditCard,
-  Fingerprint,
   Globe2,
   Layers3,
   LockKeyhole,
   Menu,
   MoveUpRight,
   Plus,
-  ShieldCheck,
-  Smartphone,
-  Sparkles,
   X,
 } from "lucide-react";
 import { LanguageContext, useCopy, type Language } from "@/components/language";
@@ -38,6 +34,7 @@ import { GlowLink } from "@/components/glow-link";
 import { LogoMark } from "@/components/logo-mark";
 import { ClarityNetwork } from "@/components/clarity-network";
 import { HeroWidgets } from "@/components/hero-widgets";
+import { FingerprintInteraction } from "@/components/fingerprint-interaction";
 
 function Brand({ light = false }: { light?: boolean }) {
   return (
@@ -269,9 +266,6 @@ function Landing({
               <div className="hero-stage">
                 <div className="orbit orbit-one" />
 
-                <div className="stage-coordinate coordinate-top">
-                  41°43′ N &nbsp; 44°47′ E
-                </div>
                 <motion.div
                   className="hero-phone"
                   initial={{ opacity: 0 }}
@@ -292,37 +286,12 @@ function Landing({
                   <PhonePreview compact />
                 </motion.div>
                 <HeroWidgets />
-                <div className="stage-caption">
-                  <span className="status-dot" />
-                  {t(
-                    "APP CONCEPT · DEMO DATA",
-                    "აპის კონცეფცია · დემო მონაცემები",
-                  )}
-                </div>
               </div>
-            </div>
-            <div className="container hero-bottom">
-              <span>
-                {t(
-                  "A little clarity changes everything.",
-                  "ცოტა სიცხადე ყველაფერს ცვლის.",
-                )}
-              </span>
-              <a href="#the-shift">
-                {t("SCROLL TO EXPLORE", "ჩამოყევი აღმოსაჩენად")}
-                <ArrowDown size={14} />
-              </a>
-              <span className="edition">
-                {t("YOUR NEXT CHAPTER / 001", "შენი ახალი თავი / 001")}
-              </span>
             </div>
           </section>
 
           <div className="obligations-strip">
             <div className="container strip-inner">
-              <span>
-                {t("ALL THE THINGS ON YOUR MIND.", "ყველაფერი, რაზეც ფიქრობ.")}
-              </span>
               {[
                 t("Loans", "სესხები"),
                 t("Utility bills", "კომუნალური"),
@@ -342,14 +311,7 @@ function Landing({
             <div className="container">
               <Reveal className="section-topline">
                 <span className="eyebrow">
-                  <span className="section-number">01 /</span>
                   {t("THE SHIFT", "ცვლილება")}
-                </span>
-                <span className="small-note">
-                  {t(
-                    "Less mental load. More headspace.",
-                    "ნაკლები ფიქრი. მეტი თავისუფლება.",
-                  )}
                 </span>
               </Reveal>
               <div className="problem-grid">
@@ -394,7 +356,6 @@ function Landing({
               <div className="experience-copy">
                 <Reveal>
                   <span className="eyebrow">
-                    <span className="section-number">02 /</span>
                     {t("MEET YOUR FINANCIAL CALM", "შენი ფინანსური სიმშვიდე")}
                   </span>
                   <h2>
@@ -447,7 +408,7 @@ function Landing({
                         "იპოვე გადახდის რიტმი, რომელიც შენს ცხოვრებას ერგება.",
                       ),
                     },
-                  ].map((item, i) => (
+                  ].map((item) => (
                     <button
                       className={`experience-tab ${tab === item.key ? "active" : ""}`}
                       key={item.key}
@@ -458,7 +419,6 @@ function Landing({
                         <item.icon size={21} />
                       </span>
                       <span>
-                        <small>0{i + 1}</small>
                         <strong>{item.title}</strong>
                         <p>{item.description}</p>
                       </span>
@@ -466,10 +426,6 @@ function Landing({
                     </button>
                   ))}
                 </div>
-                <span className="interactive-note">
-                  <span className="status-dot" />
-                  {t("GO ON, TRY THE PREVIEW", "სცადე ინტერაქტიული დემო")}
-                </span>
               </div>
               <div className="experience-phone-stage">
                 <div className="preview-halo" />
@@ -494,7 +450,6 @@ function Landing({
               <Reveal className="section-heading-row">
                 <div>
                   <span className="eyebrow">
-                    <span className="section-number">03 /</span>
                     {t("THOUGHTFULLY CONNECTED", "გააზრებულად დაკავშირებული")}
                   </span>
                   <h2>
@@ -537,7 +492,6 @@ function Landing({
                           "შენი ფინანსური მიმოხილვა",
                         )}
                       </span>
-                      <span className="demo-tag">DEMO</span>
                     </div>
                     <div className="dashboard-bars">
                       {[
@@ -665,13 +619,6 @@ function Landing({
                         strokeWidth="2.5"
                       />
                     </svg>
-                    <div>
-                      <span>{t("TODAY", "დღეს")}</span>
-                      <span>
-                        {t("YOUR NEXT CHAPTER", "შენი შემდეგი თავი")}
-                        <Sparkles size={12} />
-                      </span>
-                    </div>
                   </div>
                 </FeatureCard>
                 <FeatureCard
@@ -696,13 +643,6 @@ function Landing({
                       "ჩვენი მიზანია მხარდაჭერილი ვალდებულებების პირდაპირ Convert-ში გადახდა. ნაკლები აპი. უფრო მარტივი გამოცდილება.",
                     )}
                   </p>
-                  <div className="planned-disclaimer">
-                    <LockKeyhole size={15} />
-                    {t(
-                      "Payments and integrations are planned, not yet available.",
-                      "გადახდები და ინტეგრაციები დაგეგმილია და ჯერ არ არის ხელმისაწვდომი.",
-                    )}
-                  </div>
                 </FeatureCard>
               </div>
             </div>
@@ -712,7 +652,6 @@ function Landing({
             <div className="container">
               <Reveal className="how-heading">
                 <span className="eyebrow">
-                  <span className="section-number">04 /</span>
                   {t("A SIMPLER RHYTHM", "უფრო მარტივი რიტმი")}
                 </span>
                 <h2>
@@ -727,8 +666,8 @@ function Landing({
                     icon: Plus,
                     title: t("Bring it together", "მოაქციე ერთად"),
                     text: t(
-                      "Add your obligations in one place. Secure connections to supported services are part of our future roadmap.",
-                      "დაამატე ვალდებულებები ერთ სივრცეში. მხარდაჭერილ სერვისებთან უსაფრთხო კავშირები სამომავლო გეგმის ნაწილია.",
+                      "Add your obligations in one place.",
+                      "დაამატე ვალდებულებები ერთ სივრცეში.",
                     ),
                   },
                   {
@@ -764,25 +703,10 @@ function Landing({
           <section id="about" className="trust-section section-padding">
             <div className="container trust-grid">
               <Reveal className="trust-visual">
-                <div className="trust-orbit">
-                  <div />
-                  <div />
-                  <div />
-                </div>
-                <div className="fingerprint-disc">
-                  <Fingerprint size={92} strokeWidth={1} />
-                </div>
-                <span className="trust-label">
-                  <ShieldCheck size={15} />
-                  {t("TRUST IS THE FOUNDATION", "ნდობა ჩვენი საფუძველია")}
-                </span>
-                <span className="trust-coordinate">
-                  DESIGNED WITH INTENTION.
-                </span>
+                <FingerprintInteraction />
               </Reveal>
               <Reveal>
                 <span className="eyebrow">
-                  <span className="section-number">05 /</span>
                   {t("BUILT AROUND YOU", "შენს გარშემო შექმნილი")}
                 </span>
                 <h2>
@@ -814,28 +738,13 @@ function Landing({
                     {
                       icon: Check,
                       title: t("Your consent comes first", "ჯერ შენი თანხმობა"),
-                      text: t(
-                        "Future connections will need your explicit permission.",
-                        "მომავალ კავშირებს შენი მკაფიო თანხმობა დასჭირდება.",
-                      ),
-                    },
-                    {
-                      icon: ShieldCheck,
-                      title: t(
-                        "Clarity over fine print",
-                        "სიცხადე წვრილი შრიფტის ნაცვლად",
-                      ),
-                      text: t(
-                        "No claimed partnerships or certifications. Just a commitment to build responsibly.",
-                        "არ ვაცხადებთ არარსებულ პარტნიორობას ან სერტიფიკაციას. ვქმნით პასუხისმგებლობით.",
-                      ),
                     },
                   ].map((item) => (
                     <div key={item.title}>
                       <item.icon size={18} />
                       <div>
                         <h3>{item.title}</h3>
-                        <p>{item.text}</p>
+                        {"text" in item && <p>{item.text}</p>}
                       </div>
                     </div>
                   ))}
@@ -847,9 +756,6 @@ function Landing({
           <section className="faq-section">
             <div className="container faq-grid">
               <Reveal>
-                <span className="eyebrow">
-                  {t("A LITTLE MORE CLARITY", "ცოტა მეტი სიცხადე")}
-                </span>
                 <h2>
                   {t("Good questions.", "კარგი კითხვები.")}
                   <br />
@@ -937,13 +843,6 @@ function Landing({
           <section id="waitlist" className="waitlist-section">
             <div className="container waitlist-content">
               <Reveal>
-                <div className="eyebrow pill-eyebrow">
-                  <span className="status-dot" />
-                  {t(
-                    "YOUR NEXT CHAPTER STARTS HERE",
-                    "შენი შემდეგი თავი აქ იწყება",
-                  )}
-                </div>
                 <h2>
                   {t("More clarity.", "მეტი სიცხადე.")}
                   <br />
@@ -961,26 +860,6 @@ function Landing({
                   )}
                 </p>
                 <WaitlistForm language={language} openPrivacy={openPrivacy} />
-                <div className="platforms">
-                  <span>
-                    <Smartphone size={20} />
-                    <span>
-                      <small>
-                        {t("COMING SOON FOR", "მალე ხელმისაწვდომი")}
-                      </small>
-                      iOS & Android
-                    </span>
-                  </span>
-                  <span className="platform-divider" />
-                  <span className="built-georgia">
-                    <span className="georgia-mark" aria-hidden="true">
-                      ✚
-                    </span>
-                    {t("Made for Georgia.", "საქართველოსთვის.")}
-                    <br />
-                    {t("With you in mind.", "შენზე ფიქრით.")}
-                  </span>
-                </div>
               </Reveal>
             </div>
           </section>
@@ -990,12 +869,6 @@ function Landing({
           <div className="container footer-top">
             <div>
               <Brand />
-              <p>
-                {t(
-                  "A little more in control. A lot more you.",
-                  "ცოტა მეტი კონტროლი. მეტი შენ.",
-                )}
-              </p>
             </div>
             <div className="footer-links">
               <a href="#features">{t("Features", "შესაძლებლობები")}</a>
@@ -1016,16 +889,6 @@ function Landing({
             <span>
               © 2026 Convert.{" "}
               {t("All rights reserved.", "ყველა უფლება დაცულია.")}
-            </span>
-            <span>
-              {t(
-                "In development. Illustrative previews only.",
-                "შემუშავების პროცესშია. მხოლოდ საილუსტრაციო დემო.",
-              )}
-            </span>
-            <span>
-              {t("Tbilisi, Georgia", "თბილისი, საქართველო")}{" "}
-              <span className="tiny-cross">✦</span>
             </span>
           </div>
         </footer>
@@ -1050,20 +913,20 @@ function Landing({
             <h2>{t("Waitlist privacy", "სიის კონფიდენციალურობა")}</h2>
             <p>
               {t(
-                "If registration is enabled, we store your email address, chosen language, consent, and signup time to send Convert launch and product updates. We don’t request financial or banking information.",
-                "რეგისტრაციის ჩართვისას ვინახავთ ელფოსტას, არჩეულ ენას, თანხმობას და რეგისტრაციის დროს, რათა გაგიზიაროთ Convert-ის სიახლეები. არ ვითხოვთ ფინანსურ ან საბანკო ინფორმაციას.",
+                "We store your email address, chosen language, consent, and signup time to send Convert launch and product updates. We don’t request financial or banking information.",
+                "ვინახავთ ელფოსტას, არჩეულ ენას, თანხმობას და რეგისტრაციის დროს, რათა გაგიზიაროთ Convert-ის სიახლეები. არ ვითხოვთ ფინანსურ ან საბანკო ინფორმაციას.",
               )}
             </p>
             <p>
               {t(
-                "Registration data is stored in our configured database, accessible to authorized operators and the hosting provider. We do not sell waitlist data. If registration is unavailable, your email is not saved.",
-                "მონაცემები ინახება კონფიგურირებულ ბაზაში, რომელზეც წვდომა აქვთ უფლებამოსილ ოპერატორებს და ჰოსტინგის პროვაიდერს. მონაცემებს არ ვყიდით. თუ რეგისტრაცია მიუწვდომელია, ელფოსტა არ ინახება.",
+                "Registration data is stored in our configured database, accessible to authorized operators and the hosting provider. We do not sell waitlist data.",
+                "მონაცემები ინახება კონფიგურირებულ ბაზაში, რომელზეც წვდომა აქვთ უფლებამოსილ ოპერატორებს და ჰოსტინგის პროვაიდერს. მონაცემებს არ ვყიდით.",
               )}
             </p>
             <p>
               {t(
-                "You can withdraw consent or request deletion by replying to any launch email. Every update will provide an unsubscribe option. The interactive preview uses fictional data and never connects to your accounts.",
-                "თანხმობის გასაუქმებლად ან წაშლის მოთხოვნით უპასუხეთ ნებისმიერ საინფორმაციო წერილს. ყველა წერილს ექნება გამოწერის გაუქმების საშუალება. დემო იყენებს გამოგონილ მონაცემებს და არ უკავშირდება თქვენს ანგარიშებს.",
+                "You can request deletion by replying to any launch email. The interactive preview uses fictional data and never connects to your accounts.",
+                "წაშლის მოთხოვნით უპასუხეთ ნებისმიერ საინფორმაციო წერილს. დემო იყენებს გამოგონილ მონაცემებს და არ უკავშირდება თქვენს ანგარიშებს.",
               )}
             </p>
             <p className="privacy-small">

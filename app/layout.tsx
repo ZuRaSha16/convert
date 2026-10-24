@@ -10,6 +10,7 @@ import "./site-scene.css";
 import "./themes.css";
 import "./clarity-network.css";
 import "./hero-widgets.css";
+import "./fingerprint.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,7 +42,7 @@ const georgianAccent = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.SITE_URL || "https://convert-ten-roan.vercel.app"),
   title: "Convert — Less juggling. More living.",
   description:
     "A clearer financial future for Georgia. Convert is building one calm space for loans, bills, taxes, and payment deadlines. Explore the app concept and join the waitlist.",

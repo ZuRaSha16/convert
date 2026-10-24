@@ -94,7 +94,7 @@ export function WaitlistForm({
           )}
         </GlowButton>
       </div>
-      <div className="honeypot" aria-hidden="true">
+      <div className="honeypot" aria-hidden="true" hidden>
         <label htmlFor="website">Website</label>
         <input
           id="website"

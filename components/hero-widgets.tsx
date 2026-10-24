@@ -84,14 +84,12 @@ export function HeroWidgets() {
         </div>
         <div className="widget-progress-summary">
           <strong>32<span>%</span></strong>
-          <span>{t("closer to freedom", "უფრო ახლოს თავისუფლებასთან")}</span>
         </div>
         <div className="widget-progress" role="progressbar" aria-label={t("Loan repaid", "დაფარული სესხი")} aria-valuenow={32} aria-valuemin={0} aria-valuemax={100}>
           <span />
         </div>
         <div className="widget-progress-footer">
           <span className="widget-progress-detail" aria-live="polite">
-            <span hidden={showBreakdown}>{t("Your effort is adding up.", "ყოველი ნაბიჯი მნიშვნელოვანია.")}</span>
             <span id={breakdownId} hidden={!showBreakdown}>{t("32% repaid · 68% to go", "32% დაფარულია · დარჩა 68%")}</span>
           </span>
           <button

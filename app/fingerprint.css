@@ -1,0 +1,66 @@
+.fingerprint-interaction {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.fingerprint-interaction .fingerprint-disc {
+  padding: 0;
+  overflow: hidden;
+  z-index: 1;
+  transition: border-color 300ms, box-shadow 400ms;
+}
+
+.fingerprint-disc > svg {
+  position: relative;
+  z-index: 1;
+  animation: fingerprint-breathe 5s ease-in-out infinite;
+}
+
+.fingerprint-disc::after {
+  content: "";
+  position: absolute;
+  inset: -60% 0;
+  background: linear-gradient(transparent 43%, color-mix(in srgb, var(--accent-strong) 14%, transparent) 49%, color-mix(in srgb, var(--accent-strong) 35%, transparent) 50%, transparent 56%);
+  animation: fingerprint-scan 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  :root .fingerprint-interaction .fingerprint-disc:hover {
+    border-color: color-mix(in srgb, var(--accent-strong) 55%, var(--line));
+    box-shadow: 0 0 26px color-mix(in srgb, var(--accent-strong) 12%, transparent), inset 0 0 18px color-mix(in srgb, var(--accent-strong) 6%, transparent);
+  }
+}
+
+.fingerprint-interaction .trust-orbit > div:first-child {
+  animation: orbit-turn 38s linear infinite;
+}
+
+.fingerprint-interaction .trust-orbit > div:nth-child(3) {
+  animation: orbit-turn 70s linear infinite reverse;
+}
+
+.fingerprint-interaction[data-motion="paused"] :is(.trust-orbit > div, .fingerprint-disc > svg),
+.fingerprint-interaction[data-motion="paused"] .fingerprint-disc::after {
+  animation-play-state: paused;
+}
+
+@keyframes fingerprint-breathe {
+  0%, 100% { opacity: 0.75; filter: drop-shadow(0 0 0 transparent); }
+  50% { opacity: 1; filter: drop-shadow(0 0 3px color-mix(in srgb, var(--accent-strong) 50%, transparent)); }
+}
+
+@keyframes fingerprint-scan {
+  0%, 15% { transform: translateY(-45%); opacity: 0; }
+  25%, 65% { opacity: 0.8; }
+  80%, 100% { transform: translateY(45%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fingerprint-interaction :is(.trust-orbit > div, .fingerprint-disc > svg),
+  .fingerprint-interaction .fingerprint-disc::after { animation: none; }
+  .fingerprint-interaction .fingerprint-disc { transition: none; }
+}

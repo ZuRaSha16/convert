@@ -167,9 +167,6 @@ export function PhonePreview({
       <div className="phone-content">
         <div className="phone-greeting">
           <div>
-            <span className="tiny-muted">
-              {t("A little more peace of mind.", "მეტი სიმშვიდე ყოველდღე.")}
-            </span>
             <h3>
               {t("Hello, Nino", "გამარჯობა, ნინო")}{" "}
               <span className="greeting-spark">✳</span>
@@ -240,7 +237,6 @@ export function PhonePreview({
                       <ArrowDownLeft size={12} />
                       12.8% {t("this month", "ამ თვეში")}
                     </span>
-                    <span>{t("Demo balance", "დემო ბალანსი")}</span>
                   </div>
                   <svg
                     className="balance-waves"
@@ -292,16 +288,10 @@ export function PhonePreview({
                   <div>
                     <strong>
                       {t(
-                        "A little closer to debt-free",
-                        "უფრო ახლოს თავისუფლებასთან",
+                        "Small steps. Real progress.",
+                        "პატარა ნაბიჯები. რეალური პროგრესი.",
                       )}
                     </strong>
-                    <small>
-                      {t(
-                        "You’ve repaid 32% of your demo loan",
-                        "დემო სესხის 32% დაფარულია",
-                      )}
-                    </small>
                     <div className="mini-progress">
                       <motion.span
                         style={{ width: "32%" }}
