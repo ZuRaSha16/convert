@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Noto_Sans_Georgian } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { themeInitializationScript } from "@/lib/theme";
 import "./globals.css";
 import "./hero-preview.css";
@@ -8,6 +9,7 @@ import "./scene-motion.css";
 import "./site-scene.css";
 import "./themes.css";
 import "./clarity-network.css";
+import "./hero-widgets.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,10 +21,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: "swap",
 });
-const georgian = Noto_Sans_Georgian({
+const georgian = localFont({
+  src: "./fonts/alk-sanet.ttf",
   variable: "--font-georgian",
-  subsets: ["georgian"],
+  weight: "400",
+  style: "normal",
   display: "swap",
+  adjustFontFallback: false,
+  // Keep the site's Latin typography and numbers when languages are mixed.
+  declarations: [{ prop: "unicode-range", value: "U+10D0-10F0" }],
+});
+const georgianAccent = localFont({
+  src: "./fonts/geo-dedaena.ttf",
+  variable: "--font-georgian-accent",
+  weight: "400",
+  style: "normal",
+  display: "swap",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
@@ -62,7 +77,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${georgian.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${georgian.variable} ${georgianAccent.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitializationScript }} />

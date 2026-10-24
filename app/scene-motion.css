@@ -81,10 +81,10 @@
   animation: scene-phone-float 8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 .hero .reminder-float {
-  animation: scene-card-float 7s -2s ease-in-out infinite;
+  animation: scene-card-jiggle 6.4s -1.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 .hero .progress-float {
-  animation: scene-card-float 8s -5s ease-in-out infinite reverse;
+  animation: scene-card-jiggle 7.2s -4.6s cubic-bezier(0.37, 0, 0.63, 1) infinite reverse;
 }
 .site-shell:has(.site-atmosphere[data-motion="paused"])
   :is(.hero-phone, .floating-card) {
@@ -130,13 +130,23 @@
     rotate: calc(-7deg + var(--phone-rock));
   }
 }
-@keyframes scene-card-float {
+@keyframes scene-card-jiggle {
   0%,
   100% {
     translate: 0 0;
+    rotate: calc(var(--widget-angle) - 0.6deg);
+  }
+  25% {
+    translate: 1px -2px;
+    rotate: calc(var(--widget-angle) + 0.8deg);
   }
   50% {
-    translate: 2px -5px;
+    translate: 0 -4px;
+    rotate: calc(var(--widget-angle) - 0.8deg);
+  }
+  75% {
+    translate: -1px -2px;
+    rotate: calc(var(--widget-angle) + 0.6deg);
   }
 }
 @media (max-width: 640px) {

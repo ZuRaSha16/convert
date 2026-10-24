@@ -37,6 +37,7 @@ import { SiteBackground } from "@/components/site-background";
 import { GlowLink } from "@/components/glow-link";
 import { LogoMark } from "@/components/logo-mark";
 import { ClarityNetwork } from "@/components/clarity-network";
+import { HeroWidgets } from "@/components/hero-widgets";
 
 function Brand({ light = false }: { light?: boolean }) {
   return (
@@ -210,7 +211,7 @@ function Landing({
                     t("Less juggling.", "ნაკლები საზრუნავი."),
                     t("More living.", "მეტი ცხოვრება."),
                   ].map((line, i) => (
-                    <span className={`hero-line line-${i}`} key={line}>
+                    <span className={`hero-line line-${i}${i === 1 ? " georgian-accent" : ""}`} key={line}>
                       <motion.span
                         initial={{ y: reduce ? 0 : "110%" }}
                         animate={{ y: 0 }}
@@ -290,79 +291,7 @@ function Landing({
                 >
                   <PhonePreview compact />
                 </motion.div>
-                <motion.div
-                  className="floating-card reminder-float"
-                  initial={{ opacity: 0, x: 25 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.7, delay: 0.7 }}
-                >
-                  <span className="float-icon">
-                    <Bell size={18} />
-                  </span>
-                  <div>
-                    <span className="widget-eyebrow">
-                      {t("PAYMENT REMINDER", "გადახდის შეხსენება")}
-                    </span>
-                    <strong>
-                      {t(
-                        "One less thing to remember.",
-                        "ერთი საზრუნავით ნაკლები.",
-                      )}
-                    </strong>
-                    <p>
-                      {t("Personal loan", "პირადი სესხი")} <b>₾450.00</b>
-                    </p>
-                    <span className="widget-due">
-                      <span />
-                      {t("Due in 3 days", "ვადა 3 დღეში")}
-                    </span>
-                  </div>
-                  <span className="float-time">{t("now", "ახლა")}</span>
-                </motion.div>
-                <motion.div
-                  className="floating-card progress-float"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.9 }}
-                >
-                  <span className="mini-ring">
-                    <svg viewBox="0 0 48 48" aria-hidden="true">
-                      <circle
-                        className="widget-ring-track"
-                        cx="24"
-                        cy="24"
-                        r="20"
-                      />
-                      <circle
-                        className="widget-ring-fill"
-                        cx="24"
-                        cy="24"
-                        r="20"
-                        pathLength="100"
-                        strokeDasharray="32 100"
-                      />
-                    </svg>
-                    <Check size={17} />
-                  </span>
-                  <div>
-                    <span>
-                      {t(
-                        "Small steps. Real progress.",
-                        "პატარა ნაბიჯები. რეალური პროგრესი.",
-                      )}
-                    </span>
-                    <strong>
-                      32%{" "}
-                      <small>
-                        {t("closer to freedom", "უფრო ახლოს თავისუფლებასთან")}
-                      </small>
-                    </strong>
-                    <div className="widget-progress" aria-hidden="true">
-                      <span />
-                    </div>
-                  </div>
-                  <Sparkles size={15} />
-                </motion.div>
+                <HeroWidgets />
                 <div className="stage-caption">
                   <span className="status-dot" />
                   {t(
@@ -401,7 +330,7 @@ function Landing({
                 t("Fines", "ჯარიმები"),
                 t("More peace of mind", "მეტი სიმშვიდე"),
               ].map((label, i) => (
-                <span className={i === 4 ? "strip-last" : ""} key={label}>
+                <span className={i === 4 ? "strip-last georgian-accent" : ""} key={label}>
                   <Plus size={13} />
                   {label}
                 </span>
@@ -471,7 +400,7 @@ function Landing({
                   <h2>
                     {t("Your whole picture.", "სრული სურათი.")}
                     <br />
-                    <em>{t("In your pocket.", "შენს ჯიბეში.")}</em>
+                    <em className="georgian-accent">{t("In your pocket.", "შენს ჯიბეში.")}</em>
                   </h2>
                   <p>
                     {t(
@@ -789,7 +718,7 @@ function Landing({
                 <h2>
                   {t("Find your flow.", "იპოვე შენი რიტმი.")}
                   <br />
-                  <em>{t("Three small steps.", "სამი პატარა ნაბიჯი.")}</em>
+                  <em className="georgian-accent">{t("Three small steps.", "სამი პატარა ნაბიჯი.")}</em>
                 </h2>
               </Reveal>
               <div className="steps-grid">
@@ -1018,7 +947,7 @@ function Landing({
                 <h2>
                   {t("More clarity.", "მეტი სიცხადე.")}
                   <br />
-                  <em>{t("More possibility.", "მეტი შესაძლებლობა.")}</em>
+                  <em className="georgian-accent">{t("More possibility.", "მეტი შესაძლებლობა.")}</em>
                 </h2>
                 <p>
                   {t(

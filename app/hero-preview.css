@@ -96,92 +96,9 @@
 .hero-phone .mini-progress { height: 4px; }
 .hero-phone .phone-bottom-nav { padding-top: 12px; }
 
-.hero-stage .floating-card {
-  padding: 16px;
-  gap: 12px;
-  border-radius: 17px;
-  box-shadow: 0 12px 32px #17345616, 0 2px 6px #17345608;
-  font-variant-numeric: tabular-nums;
-}
-.hero-stage .reminder-float {
-  max-width: 276px;
-  transform: rotate(4deg) !important;
-  align-items: flex-start;
-}
-.hero-stage .float-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  flex-shrink: 0;
-}
-.hero-stage .widget-eyebrow {
-  display: block;
-  font-size: 8px;
-  font-weight: 650;
-  letter-spacing: 0.8px;
-  color: #526d8c;
-  margin-bottom: 7px;
-}
-.hero-stage .reminder-float strong { font-size: 11px; line-height: 1.5; }
-.hero-stage .reminder-float p {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px 12px;
-  justify-content: space-between;
-  font-size: 10px;
-  margin-top: 8px;
-}
-.reminder-float p b { color: var(--ink); font-weight: 650; }
-.widget-due {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 8px;
-  font-size: 9px;
-  color: #23795d;
-}
-.widget-due > span { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
-.hero-stage .float-time { font-size: 8px; }
-.hero-stage .progress-float { transform: rotate(-3deg) !important; }
-.hero-stage .mini-ring {
-  position: relative;
-  width: 46px;
-  height: 46px;
-  border: 0;
-  color: #287d65;
-  flex-shrink: 0;
-}
-.mini-ring > svg:first-child { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-.mini-ring circle { fill: none; stroke-width: 3; }
-.widget-ring-track { stroke: #dce9e5; }
-.widget-ring-fill { stroke: #37a47e; stroke-linecap: round; }
-.hero-stage .progress-float > div > span { font-size: 10px; }
-.hero-stage .progress-float strong { font-size: 25px; font-weight: 600; }
-.hero-stage .progress-float small { font-size: 9px; }
-.widget-progress { height: 4px; margin-top: 10px; border-radius: 8px; background: #dce9e5; overflow: hidden; }
-.widget-progress > span { display: block; height: 100%; width: 32%; background: #37a47e; border-radius: inherit; }
-
-@media (max-width: 1100px) {
-  .hero-stage .floating-card { padding: 12px; gap: 8px; }
-  .hero-stage .reminder-float { max-width: 234px; }
-  .hero-stage .reminder-float strong { font-size: 10px; }
-  .hero-stage .float-icon { width: 30px; height: 32px; }
-}
-@media (max-width: 850px) {
-  .hero-stage { height: 730px; }
-  .hero-stage .reminder-float { top: 115px; max-width: 218px; }
-  .hero-stage .progress-float > div > span { font-size: 9px; }
-  .hero-stage .progress-float strong { font-size: 23px; }
-  .hero-stage .progress-float small { font-size: 8px; }
-}
 @media (max-width: 640px) {
-  .hero-stage { height: 730px; }
   /* Leave room for the tilted frame's horizontal projection on narrow screens. */
   .hero-phone { max-width: calc(100vw - 88px); flex-shrink: 0; }
-  /* These cards are decorative; taps should reach the preview below them. */
-  .hero-stage .floating-card { pointer-events: none; }
-  .hero-stage .reminder-float { top: 95px; right: -8px; }
-  .hero-stage .progress-float { bottom: 90px; left: -5px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-phone { rotate: -7deg !important; }

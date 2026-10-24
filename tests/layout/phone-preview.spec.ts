@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const models = [".hero-phone .phone", ".experience-phone-stage .phone"];
 const views = [".balance-card", ".timeline-view", ".plan-view"];
 
-test("desktop retains the original mockup and widget geometry", async ({ page }) => {
+test("desktop retains the original phone geometry with interactive widgets", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.addInitScript(() => {
     localStorage.setItem("convert-language", "ka");
@@ -12,12 +12,14 @@ test("desktop retains the original mockup and widget geometry", async ({ page })
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("lang", "ka");
   await page.evaluate(() => document.fonts.ready);
-  const geometry = await page.locator(".phone,.hero-stage,.experience-grid,.floating-card").evaluateAll(elements => elements.map(element => {
+  const geometry = await page.locator(".phone,.hero-stage,.experience-grid").evaluateAll(elements => elements.map(element => {
     const node = element as HTMLElement;
     return [node.offsetWidth, node.offsetHeight];
   }));
   // Captured from the production build before the mobile-only fixes.
-  expect(geometry).toEqual([[570, 730], [292, 660], [276, 133], [340, 105], [1280, 742], [320, 680]]);
+  expect(geometry).toEqual([[570, 730], [292, 660], [1280, 742], [320, 680]]);
+  await expect(page.locator(".hero-widget-position")).toHaveCount(2);
+  await expect(page.locator(".widget-drag-handle")).toHaveCount(0);
 });
 
 for (const width of [320, 375, 390, 430]) {

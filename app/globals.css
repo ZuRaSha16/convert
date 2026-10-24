@@ -9,13 +9,13 @@
   --line: #d9e1ee;
   --mint: #d5dce7;
   --lilac: #e9e4f0;
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-georgian), var(--font-geist-sans);
 }
 @theme inline {
   --color-background: var(--paper);
   --color-foreground: var(--ink);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-georgian), var(--font-geist-sans);
+  --font-mono: var(--font-georgian), var(--font-geist-mono);
 }
 * {
   box-sizing: border-box;
@@ -28,7 +28,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-family: var(--font-georgian), var(--font-geist-sans), Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 button,
@@ -88,7 +88,7 @@ h2 {
   line-height: 1.13;
 }
 h2 em {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-georgian), Georgia, "Times New Roman", serif;
   font-weight: 400;
 }
 h3 {
@@ -109,7 +109,7 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 13px;
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 10px;
   letter-spacing: 1.1px;
   font-weight: 500;
@@ -355,7 +355,7 @@ p {
 }
 .hero .line-1 {
   color: var(--accent-strong);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-georgian), Georgia, "Times New Roman", serif;
   font-style: italic;
   font-weight: 400;
   letter-spacing: -4px;
@@ -529,7 +529,7 @@ p {
 }
 .stage-coordinate {
   position: absolute;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 8px;
   color: #6fba9b;
   letter-spacing: 1.2px;
@@ -545,7 +545,7 @@ p {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 8px;
   letter-spacing: 1.2px;
   color: #6a80a5;
@@ -566,13 +566,13 @@ p {
   display: flex;
   align-items: center;
   gap: 15px;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 8px;
   letter-spacing: 1.2px;
 }
 .edition {
   font-size: 8px;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   letter-spacing: 0.7px;
 }
 .obligations-strip {
@@ -588,7 +588,7 @@ p {
   min-height: 80px;
 }
 .strip-inner > span:first-child {
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 8px;
   letter-spacing: 0.6px;
   color: #7388ab;
@@ -606,7 +606,7 @@ p {
   color: #7e91b2;
 }
 .strip-inner .strip-last {
-  font-family: Georgia, serif;
+  font-family: var(--font-georgian), Georgia, serif;
   font-style: italic;
   font-size: 16px !important;
   color: #047857 !important;
@@ -1447,7 +1447,7 @@ p {
   flex: 1;
 }
 .experience-tab small {
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 8px;
   color: #6b81a6;
   margin-right: 10px;
@@ -1478,7 +1478,7 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 8px;
   letter-spacing: 1.2px;
   color: #7f92b2;
@@ -1574,7 +1574,7 @@ p {
 }
 .demo-tag {
   font-size: 6px;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   letter-spacing: 1px;
   color: #7488ab;
 }
@@ -1681,7 +1681,7 @@ p {
 .feature-chart > div {
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 7px;
   letter-spacing: 0.4px;
   color: #6e83a8;
@@ -1701,7 +1701,7 @@ p {
   position: absolute;
   right: 23px;
   top: 28px;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 7px;
   letter-spacing: 0.6px;
   color: #6279a1;
@@ -1750,7 +1750,7 @@ p {
   color: #6b81a6;
 }
 .step-top > span {
-  font-family: Georgia, serif;
+  font-family: var(--font-georgian), Georgia, serif;
   font-size: 43px;
   font-style: italic;
   letter-spacing: -3px;
@@ -1839,7 +1839,7 @@ p {
   gap: 10px;
   background: var(--paper);
   padding: 8px 10px;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 7px;
   letter-spacing: 0.8px;
   color: #6b81a6;
@@ -1848,7 +1848,7 @@ p {
   position: absolute;
   top: 23px;
   left: 0;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 7px;
   letter-spacing: 1.2px;
   color: #91a1bd;
@@ -2103,7 +2103,7 @@ p {
 }
 .platforms small {
   display: block;
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-georgian), var(--font-geist-mono), monospace;
   font-size: 6px;
   letter-spacing: 0.6px;
   margin-bottom: 4px;
@@ -2273,6 +2273,15 @@ p {
   font-family: inherit;
   font-style: normal;
 }
+[data-language="ka"] .hero .georgian-accent,
+[data-language="ka"] h2 .georgian-accent,
+[data-language="ka"] .strip-last.georgian-accent {
+  font-family: var(--font-georgian-accent), var(--font-georgian), sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
 [data-language="ka"] .waitlist-content h2 {
   font-size: 60px;
 }
@@ -2293,6 +2302,17 @@ p {
 }
 [data-language="ka"] .feature-card h3 {
   font-size: 20px;
+}
+[data-language="ka"] .dashboard-bars > div {
+  gap: 8px;
+}
+[data-language="ka"] .dashboard-bars > div > span {
+  flex: 0 0 68px;
+  width: auto;
+  line-height: 1.5;
+}
+[data-language="ka"] .strip-last {
+  font-style: normal;
 }
 [data-language="ka"] .phone-greeting h3 {
   font-size: 17px;
@@ -3322,7 +3342,7 @@ p {
     letter-spacing: -1px;
   }
   [data-language="ka"] .waitlist-content h2 {
-    font-size: 40px;
+    font-size: clamp(32px, 10vw, 40px);
   }
   [data-language="ka"] .hero-actions {
     gap: 14px;

@@ -1,0 +1,147 @@
+/* Fixed placement, gentle jiggle, and button feedback use separate layers. */
+.hero-widgets {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+.hero-widget-position {
+  position: absolute;
+  width: 292px;
+  max-width: calc(100% - 24px);
+  pointer-events: auto;
+}
+.hero-widget-reminder { top: 124px; right: 12px; }
+.hero-widget-progress { bottom: 100px; left: 12px; }
+@media (min-width: 1400px) {
+  .hero-widgets { inset-inline: -48px -100px; }
+  .hero-widget-reminder { width: 260px; right: 10px; }
+}
+.hero-widget-position:is(:hover, :focus-within) { z-index: 2; }
+.hero-stage .hero-widget-surface {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: 100%;
+  max-width: none;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 94%, var(--accent-strong)), var(--surface) 65%);
+  color: var(--ink);
+  box-shadow: 0 16px 36px var(--shadow-color), 0 3px 8px var(--shadow-color), inset 0 1px 0 color-mix(in srgb, var(--surface) 75%, white);
+  transform: none !important;
+  rotate: var(--widget-angle);
+  transition: scale 240ms ease, border-color 200ms ease, box-shadow 240ms ease;
+  font-variant-numeric: tabular-nums;
+}
+.hero-widget-reminder { --widget-angle: 3deg; }
+.hero-widget-progress { --widget-angle: -3deg; }
+.hero-widget-position:focus-within .hero-widget-surface {
+  border-color: var(--accent-strong);
+}
+.widget-heading { display: flex; align-items: center; gap: 11px; }
+.widget-heading-copy { min-width: 0; }
+.hero-stage .hero-widget-surface .float-icon,
+.hero-stage .hero-widget-surface .mini-ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  color: var(--accent-strong);
+}
+.hero-stage .hero-widget-surface .float-icon {
+  border-radius: 13px;
+  background: var(--accent-surface);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-strong) 9%, transparent);
+  transition: background 200ms ease, color 200ms ease;
+}
+.hero-stage .float-icon[data-active="true"] { background: var(--accent-strong); color: var(--surface); }
+.hero-stage .hero-widget-surface .widget-eyebrow {
+  display: block;
+  margin: 0 0 5px;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: 1px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.hero-stage .hero-widget-surface .widget-heading strong {
+  display: block;
+  max-width: none;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: -0.25px;
+}
+.widget-payment-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 18px; }
+.widget-payment-row > span { color: var(--muted); font-size: 11px; }
+.hero-stage .hero-widget-surface .widget-payment-row > strong { font-size: 23px; font-weight: 600; line-height: 1; letter-spacing: -0.8px; }
+.widget-payment-row > strong > span { font-size: 14px; letter-spacing: -0.3px; }
+.widget-reminder-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
+.hero-stage .hero-widget-surface .widget-due { display: inline-flex; align-items: center; gap: 5px; margin: 0; font-size: 10px; color: var(--accent-strong); white-space: nowrap; }
+.widget-due > span { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.widget-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 550;
+  transition: background 180ms ease, border-color 180ms ease, scale 150ms ease;
+}
+.widget-action:active { scale: 0.96; }
+.widget-action[aria-pressed="true"] { color: var(--accent-strong); border-color: var(--accent-strong); background: var(--accent-surface); }
+.hero-stage .hero-widget-surface .mini-ring > svg:first-child { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.hero-widget-surface .mini-ring circle { fill: none; stroke-width: 3; }
+.hero-widget-surface .mini-ring .widget-ring-track { stroke: var(--line); }
+.hero-widget-surface .mini-ring .widget-ring-fill { stroke: var(--accent-strong); stroke-linecap: round; }
+.widget-progress-summary { display: flex; align-items: baseline; gap: 8px; margin-top: 12px; }
+.hero-stage .hero-widget-surface .widget-progress-summary > strong { font-size: 32px; font-weight: 550; letter-spacing: -1.3px; line-height: 1.1; margin: 0; }
+.widget-progress-summary > strong > span { font-size: 20px; }
+.hero-widget-surface .widget-progress-summary > span { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.hero-widget-surface .widget-progress { height: 5px; margin-top: 12px; background: var(--line); border-radius: 10px; overflow: hidden; }
+.hero-widget-surface .widget-progress > span { display: block; width: 32%; height: 100%; background: var(--accent-strong); border-radius: inherit; }
+.widget-progress-footer { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-top: 5px; }
+.hero-widget-surface .widget-progress-detail { min-width: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.widget-progress-action { width: 44px; padding: 0; border-color: transparent; background: transparent; }
+.widget-progress-action > svg { transition: rotate 200ms ease; }
+.widget-progress-action[aria-expanded="true"] > svg { rotate: 180deg; }
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-widget-position:hover .hero-widget-surface { scale: 1.015; border-color: var(--accent-strong); box-shadow: 0 20px 40px var(--shadow-color), 0 4px 10px var(--shadow-color); }
+  .widget-action:hover { color: var(--accent-strong); background: var(--accent-surface); border-color: var(--accent-strong); }
+}
+@media (max-width: 1100px) and (min-width: 641px) {
+  .hero-widget-position { width: 260px; }
+  .hero-widget-reminder { top: 115px; }
+  .hero-widget-progress { bottom: 65px; }
+}
+@media (max-width: 640px) {
+  /* Keep the cards clear of the phone's controls. */
+  .hero-stage { height: 1120px; }
+  .hero-widget-position { width: 266px; }
+  .hero-widget-reminder { top: 12px; right: 12px; }
+  .hero-widget-progress { bottom: 28px; left: 12px; }
+  .hero-stage .hero-widget-surface { pointer-events: auto; padding: 14px; }
+  .hero-stage .coordinate-top { top: 192px; }
+  .hero-stage .stage-caption { bottom: 10px; }
+  [data-language="ka"] .hero-stage { height: 1200px; padding-bottom: 80px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-widget-position { opacity: 1 !important; }
+  .hero-widget-position .hero-widget-surface { animation: none !important; scale: 1 !important; rotate: var(--widget-angle) !important; }
+  .hero-widget-surface, .hero-widget-surface * { transition: none !important; }
+  .widget-action:active { scale: 1; }
+}
