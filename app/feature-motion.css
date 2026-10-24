@@ -12,17 +12,51 @@
   transform-origin: left;
   animation: feature-balance-flow 8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
-.feature-card .notification-demo {
-  transform-origin: center;
-  animation: feature-notification-arrive 8s cubic-bezier(0.22, 1, 0.36, 1)
-    infinite;
-}
 .feature-reminders .feature-icon svg {
   transform-origin: 50% 15%;
   animation: feature-bell-nudge 8s ease-in-out infinite;
 }
-.feature-card .notification-logo {
-  animation: feature-logo-pulse 8s ease-in-out infinite;
+.notification-stack {
+  position: relative;
+  height: 192px;
+  margin-top: 28px;
+  isolation: isolate;
+  pointer-events: none;
+}
+.notification-banner {
+  position: absolute;
+  inset: 8px 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 94px;
+  padding: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface) 96%, var(--ink));
+  box-shadow: 0 8px 22px var(--shadow-color), inset 0 1px 0 color-mix(in srgb, var(--ink) 5%, transparent);
+  transform-origin: center top;
+}
+.notification-app-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: #0d1b2c;
+  box-shadow: inset 0 0 0 1px #6ee7b71a;
+}
+.notification-banner-copy { flex: 1; min-width: 0; }
+.notification-banner-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 3px; }
+.notification-banner-meta strong { font-size: 11px; font-weight: 600; letter-spacing: -0.2px; color: var(--ink); }
+.notification-banner-meta > span { font-size: 9px; color: var(--muted); }
+.notification-banner h4 { font-size: 12px; font-weight: 600; line-height: 1.4; color: var(--ink); }
+.notification-banner p { margin-top: 3px; font-size: 11px; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .notification-stack { height: 218px; }
+  .notification-banner { min-height: 120px; gap: 10px; padding: 12px; border-radius: 17px; }
+  .notification-app-icon { width: 35px; height: 35px; border-radius: 9px; }
 }
 .repayment-line {
   stroke-dasharray: 1;

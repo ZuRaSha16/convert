@@ -56,14 +56,12 @@ export function ClarityNetwork() {
         let points: Point[];
         if (mobile) {
           const left = index % 2 === 0;
-          const lane = channel + (index - 1.5) * 2;
-          const destination = hub.x + (index - 1.5) * 13;
+          // Higher cards use the inner tracks so lower branches never cross them.
+          const lane = channel + [-3, 3, -9, 9][index];
           points = [
             { x: left ? node.right : node.left, y: node.y },
             { x: lane, y: node.y },
-            { x: lane + (left ? 2 : -2), y: hub.top - 10 },
-            { x: destination, y: hub.top - 5 },
-            { x: destination, y: hub.top },
+            { x: lane, y: hub.top },
           ];
         } else if (node.top > hub.bottom && node.right > hub.left) {
           const gap = Math.min(10, (node.top - hub.bottom) / 3);

@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useSyncExternalStore, type CSSProperties } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { useSyncExternalStore, type CSSProperties } from "react";
 import { useReducedMotion } from "./use-reduced-motion";
 
 function subscribeVisibility(callback: () => void) {
@@ -16,35 +15,12 @@ export function SiteBackground() {
     () => true,
   );
   const reduce = useReducedMotion();
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const x = useSpring(pointerX, { stiffness: 35, damping: 25 });
-  const y = useSpring(pointerY, { stiffness: 35, damping: 25 });
-
-  useEffect(() => {
-    if (reduce) return;
-    function followPointer(event: globalThis.PointerEvent) {
-      if (event.pointerType !== "mouse") return;
-      pointerX.set((event.clientX / window.innerWidth - 0.5) * 22);
-      pointerY.set((event.clientY / window.innerHeight - 0.5) * 16);
-    }
-    window.addEventListener("pointermove", followPointer, { passive: true });
-    return () => window.removeEventListener("pointermove", followPointer);
-  }, [reduce, pointerX, pointerY]);
-
   return (
     <div
       className="site-atmosphere"
       data-motion={visible && !reduce ? "running" : "paused"}
       aria-hidden="true"
     >
-      <motion.div
-        className="atmosphere-light-field"
-        style={reduce ? undefined : { x, y }}
-      >
-        <div className="atmosphere-light atmosphere-light-accent" />
-        <div className="atmosphere-light atmosphere-light-blue" />
-      </motion.div>
       <svg
         className="atmosphere-paths"
         viewBox="0 0 1600 1000"

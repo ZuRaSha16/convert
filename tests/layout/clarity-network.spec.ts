@@ -46,6 +46,7 @@ test("the picture stays anchored and all four glowing widgets connect without ov
           };
           const connections = [...root.querySelectorAll<SVGGElement>("[data-connection]")];
           let connected = true, clearLines = true, mixedSegments = true;
+          const mobileLanes: number[] = [];
           for (const connection of connections) {
             const path = connection.querySelector<SVGPathElement>("path")!;
             const matrix = path.getScreenCTM()!;
@@ -53,7 +54,8 @@ test("the picture stays anchored and all four glowing widgets connect without ov
             const own = nodes.find(node => node.dataset.networkWidget === connection.dataset.connection)!;
             connected &&= onEdge(points[0], own.getBoundingClientRect()) && onEdge(points.at(-1)!, hubBox);
             mixedSegments &&= points.some((point, i) => i > 0 && Math.abs(point.y - points[i - 1].y) < 0.2 && Math.abs(point.x - points[i - 1].x) > 1)
-              && points.some((point, i) => i > 0 && Math.abs(point.y - points[i - 1].y) > 1 && Math.abs(point.x - points[i - 1].x) > 1);
+              && points.some((point, i) => i > 0 && Math.abs(point.y - points[i - 1].y) > 1 && (innerWidth <= 640 ? Math.abs(point.x - points[i - 1].x) < 0.2 : Math.abs(point.x - points[i - 1].x) > 1));
+            if (innerWidth <= 640) mobileLanes.push(points.at(-1)!.x);
             for (const other of nodes.filter(node => node !== own)) {
               for (let i = 1; i < points.length; i++) if (crosses(points[i - 1], points[i], other.getBoundingClientRect())) clearLines = false;
             }
@@ -66,8 +68,9 @@ test("the picture stays anchored and all four glowing widgets connect without ov
             fits: boxes.every(box => box.left >= -0.5 && box.right <= innerWidth + 0.5) && document.documentElement.scrollWidth <= innerWidth,
             readable: nodes.every(node => node.scrollWidth <= node.clientWidth + 1),
             mainAligned, connected, clearLines, mixedSegments,
+            separateLanes: mobileLanes.every((x, i) => mobileLanes.every((other, j) => i === j || Math.abs(x - other) >= 5.5)),
           };
-        }), { message: `${width}px / ${language} / ${theme}` }).toEqual({ noOverlap: true, fits: true, readable: true, mainAligned: true, connected: true, clearLines: true, mixedSegments: true });
+        }), { message: `${width}px / ${language} / ${theme}` }).toEqual({ noOverlap: true, fits: true, readable: true, mainAligned: true, connected: true, clearLines: true, mixedSegments: true, separateLanes: true });
       }
     }
   }

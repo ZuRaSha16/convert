@@ -35,6 +35,7 @@ import { LogoMark } from "@/components/logo-mark";
 import { ClarityNetwork } from "@/components/clarity-network";
 import { HeroWidgets } from "@/components/hero-widgets";
 import { FingerprintInteraction } from "@/components/fingerprint-interaction";
+import { NotificationStack } from "@/components/notification-stack";
 
 function Brand({ light = false }: { light?: boolean }) {
   return (
@@ -550,23 +551,7 @@ function Landing({
                       "ჭკვიანი შეხსენებები და ნათელი ვადები — მეტი დრო უფრო მნიშვნელოვანი საქმეებისთვის.",
                     )}
                   </p>
-                  <div className="notification-demo">
-                    <div className="notification-logo" aria-hidden="true">
-                      <LogoMark width={26} height={26} />
-                    </div>
-                    <div>
-                      <strong>
-                        convert{" "}
-                        <span>{t("in your corner", "შენს გვერდით")}</span>
-                      </strong>
-                      <p>
-                        {t(
-                          "A little heads-up: your loan payment is due in 3 days. You’ve got this.",
-                          "პატარა შეხსენება: სესხის გადახდა 3 დღეშია. ყველაფერი გამოგივა.",
-                        )}
-                      </p>
-                    </div>
-                  </div>
+                  <NotificationStack />
                 </FeatureCard>
                 <FeatureCard className="feature-card feature-plan">
                   <div className="feature-icon">

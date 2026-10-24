@@ -73,13 +73,13 @@
 @keyframes network-current { to { stroke-dashoffset: -1; } }
 @media (max-width: 640px) {
   .clarity-network { height: auto; min-height: 270px; margin-block: 0; padding-top: 186px; }
-  .network-widget { width: min(44%, 148px); min-height: 44px; padding: 10px; font-size: 10px; gap: 7px; }
+  .network-widget { width: min(42%, 148px); min-height: 44px; padding: 10px; font-size: 10px; gap: 7px; }
   .network-widget svg { width: 14px; height: 14px; }
   .network-widget-loan { left: 2%; top: 0; }
   .network-widget-bills { left: auto; right: 0; top: 40px; bottom: auto; }
-  .network-widget-taxes { left: 0; top: 86px; }
+  .network-widget-taxes { left: 0; right: auto; top: 86px; }
   .network-widget-deadlines { left: auto; right: 4%; top: 128px; bottom: auto; }
-  .clarity-network .network-picture { position: relative; top: auto; right: auto; transform: none; margin-inline: auto; }
+  .clarity-network .network-picture { position: relative; top: auto; left: auto; right: auto; transform: none; margin-inline: auto; }
 }
 @media (max-width: 360px) {
   .clarity-network { padding-top: 234px; }

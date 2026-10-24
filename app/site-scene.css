@@ -8,7 +8,9 @@
   background: transparent;
   border-block: 0;
 }
-:root[data-theme] :is(.experience-section::after, .waitlist-section::before) {
+:root[data-theme] .experience-section::after,
+:root[data-theme] .waitlist-section::before,
+:root[data-theme] .waitlist-section::after {
   content: none;
 }
 :root[data-theme] .trust-visual {
