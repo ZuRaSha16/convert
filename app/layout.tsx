@@ -63,7 +63,13 @@ export const metadata: Metadata = {
       "One calm space for your financial obligations. Coming soon to Georgia.",
   },
   robots: { index: true, follow: true },
-  icons: { icon: "/icon.svg", apple: "/apple-touch-icon.png" },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png", sizes: "256x256" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 export const viewport: Viewport = {
   themeColor: "#f5efdf",
