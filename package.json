@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --test tests/*.test.mjs",
-    "test:layout": "playwright test"
+    "test:layout": "playwright test",
+    "capture:social": "node scripts/capture-social-preview.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.59.0",

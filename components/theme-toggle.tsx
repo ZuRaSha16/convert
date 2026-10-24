@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
-import { isTheme, resolveTheme, themes, themeStorageKey, themeMediaQuery, type Theme } from "@/lib/theme";
+import { isTheme, resolveTheme, themes, themeStorageKey, type Theme } from "@/lib/theme";
 import { useCopy } from "./language";
 
 let sessionTheme: Theme | undefined;
@@ -13,9 +13,9 @@ function preferredTheme(): Theme {
     const saved = resolveTheme(localStorage.getItem(themeStorageKey));
     if (saved) return saved;
   } catch {
-    // System preference still works when browser storage is unavailable.
+    // Use the default mode when browser storage is unavailable.
   }
-  return window.matchMedia(themeMediaQuery).matches ? "dark" : "light";
+  return "dark";
 }
 
 function applyTheme(theme: Theme) {
@@ -27,7 +27,6 @@ function applyTheme(theme: Theme) {
 }
 
 function subscribe(callback: () => void) {
-  const media = window.matchMedia(themeMediaQuery);
   const syncPreference = () => applyTheme(preferredTheme());
   const syncStorage = (event: StorageEvent) => {
     if (event.key === themeStorageKey || event.key === null) {
@@ -37,18 +36,16 @@ function subscribe(callback: () => void) {
   };
   window.addEventListener("convert-theme-change", callback);
   window.addEventListener("storage", syncStorage);
-  media.addEventListener("change", syncPreference);
   syncPreference();
   return () => {
     window.removeEventListener("convert-theme-change", callback);
     window.removeEventListener("storage", syncStorage);
-    media.removeEventListener("change", syncPreference);
   };
 }
 
 function getSnapshot(): Theme {
   const theme = document.documentElement.dataset.theme;
-  return isTheme(theme) ? theme : "light";
+  return isTheme(theme) ? theme : "dark";
 }
 
 function selectTheme(next: Theme) {
@@ -66,7 +63,7 @@ export function ThemeToggle() {
   const theme = useSyncExternalStore(
     subscribe,
     getSnapshot,
-    () => "light" as Theme,
+    () => "dark" as Theme,
   );
 
   return (

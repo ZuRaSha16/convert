@@ -140,13 +140,13 @@ for (const width of [320, 390, 1024]) {
   });
 }
 
-test("system preference and other tabs sync without overriding an explicit choice", async ({ page }) => {
+test("dark is the default regardless of system preference and other tabs sync explicit choices", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.addInitScript(() => localStorage.setItem("convert-theme", "invalid"));
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.emulateMedia({ colorScheme: "light" });
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await chooseTheme(page, "dark");
   await chooseTheme(page, "light");
   await page.emulateMedia({ colorScheme: "dark" });

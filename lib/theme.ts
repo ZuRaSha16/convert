@@ -1,5 +1,4 @@
 export const themeStorageKey = "convert-theme";
-export const themeMediaQuery = "(prefers-color-scheme: dark)";
 
 export const themes = [
   { id: "dark", label: "Dark", labelKa: "მუქი", color: "#111b2c" },
@@ -26,8 +25,7 @@ export const themeInitializationScript = `(() => {
   let saved;
   try { saved = localStorage.getItem(${JSON.stringify(themeStorageKey)}); } catch {}
   const preferred = themes.find(theme => theme.id === saved || theme.id === legacyThemes[saved]);
-  const selected = preferred || themes.find(theme =>
-    theme.id === (window.matchMedia(${JSON.stringify(themeMediaQuery)}).matches ? 'dark' : 'light'));
+  const selected = preferred || themes[0];
   if (preferred && saved !== preferred.id) {
     try { localStorage.setItem(${JSON.stringify(themeStorageKey)}, preferred.id); } catch {}
   }
