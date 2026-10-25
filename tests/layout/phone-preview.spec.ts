@@ -49,7 +49,7 @@ for (const width of [320, 375, 390, 430]) {
           const phone = page.locator(model);
           // Visit Timeline first to reproduce the reported transition, then Plan and Overview.
           for (const tab of [1, 2, 0]) {
-            await phone.locator(".phone-tabs button").nth(tab).scrollIntoViewIfNeeded();
+            await phone.locator(".phone-bottom-nav button").nth(tab).scrollIntoViewIfNeeded();
             const [samples] = await Promise.all([
               page.evaluate(async () => {
                 const samples = [];
@@ -63,7 +63,7 @@ for (const width of [320, 375, 390, 430]) {
                 } while (performance.now() - start < 800);
                 return samples;
               }),
-              phone.locator(".phone-tabs button").nth(tab).click(),
+              phone.locator(".phone-bottom-nav button").nth(tab).click(),
             ]);
             await expect(phone.locator(views[tab])).toBeVisible();
             expect(samples.every(sample => sample.pageWidth <= width), "No horizontal page overflow during the transition").toBe(true);

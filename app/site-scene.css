@@ -36,7 +36,6 @@
 }
 :root[data-theme] .experience-section .experience-tab.active {
   background: var(--scene-selection);
-  border-left-color: var(--accent-strong);
 }
 :root[data-theme] .experience-section .experience-tab-icon {
   color: var(--scene-heading-soft);

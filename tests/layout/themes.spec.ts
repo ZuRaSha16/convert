@@ -57,7 +57,7 @@ test("one icon toggle switches between blue Dark and cream Light and saves the c
   await expect(toggle).toHaveText("");
   await expect(toggle.locator("svg")).toHaveCount(2);
   await expect(page.locator(".theme-menu,.theme-swatch,.theme-selector,.theme-buttons,.theme-button")).toHaveCount(0);
-  await page.locator(".hero-phone .phone-tabs button").nth(2).click();
+  await page.locator(".hero-phone .phone-bottom-nav button").nth(2).click();
   const geometry = () => page.locator(".phone,.hero-stage,.site-header").evaluateAll(nodes => nodes.map(node => [(node as HTMLElement).offsetWidth, (node as HTMLElement).offsetHeight]));
   const before = await geometry();
 
@@ -74,7 +74,7 @@ test("one icon toggle switches between blue Dark and cream Light and saves the c
     expect(await geometry()).toEqual(before);
     await expect(page.locator(".site-header .brand-period")).toHaveCSS("color", "rgb(110, 231, 183)");
     expect(await page.locator(".site-atmosphere").evaluate(node => getComputedStyle(node).getPropertyValue("--scene-end").trim())).toBe(theme.scene);
-    const selectors = ".theme-mode-icon, h1, .hero-description, .pill-eyebrow, .desktop-nav, .hero-actions .glow-control, .hero-stage .widget-eyebrow, .floating-card strong, .feature-card > p, .notification-demo p, .planned-badge, .phone-tabs button, .phone-note, .plan-insight, .balance-top, .balance-bottom > span, .phone-bottom-nav button, .consent, .form-footnote, .footer-top p, .footer-bottom, .step p, .trust-principles p, .faq-item p, .email-field input";
+    const selectors = ".theme-mode-icon, h1, .hero-description, .pill-eyebrow, .desktop-nav, .hero-actions .glow-control, .hero-stage .widget-eyebrow, .floating-card strong, .feature-card > p, .notification-demo p, .planned-badge, .phone-note, .plan-insight, .balance-top, .balance-bottom > span, .phone-bottom-nav button, .consent, .form-footnote, .footer-top p, .footer-bottom, .step p, .trust-principles p, .faq-item p, .email-field input";
     expect(await contrastFailures(page, selectors), theme.id).toEqual([]);
     await page.locator(".consent button").click();
     await expect(page.locator(".privacy-dialog")).toBeVisible();

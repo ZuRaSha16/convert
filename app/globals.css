@@ -702,9 +702,6 @@ p {
   flex-direction: column;
   overflow: hidden;
 }
-.phone-content > :is(.phone-greeting, .demo-reminder, .phone-tabs) {
-  flex-shrink: 0;
-}
 .phone-greeting {
   display: flex;
   align-items: center;
@@ -759,32 +756,6 @@ p {
   padding: 8px;
   border-radius: 5px;
   margin-bottom: 10px;
-}
-.phone-tabs {
-  display: flex;
-  gap: 2px;
-  border-bottom: 1px solid #dae0e9;
-  margin-bottom: 16px;
-}
-.phone-tabs button {
-  font-size: 11px;
-  padding: 0 5px 10px;
-  flex: 1;
-  color: #526785;
-  position: relative;
-}
-.phone-tabs button.active {
-  color: #222f46;
-  font-weight: 600;
-}
-.phone-tabs button.active:after {
-  content: "";
-  width: 70%;
-  height: 2px;
-  background: #566b8f;
-  position: absolute;
-  bottom: -1px;
-  left: 15%;
 }
 /* Constrain tab panels to the remaining phone screen, including transitions. */
 .phone-view-stage {
@@ -1057,9 +1028,6 @@ p {
 }
 .phone-compact .phone-greeting h3 {
   font-size: 18px;
-}
-.phone-compact .phone-tabs {
-  margin-bottom: 12px;
 }
 .phone-compact .balance-card {
   padding: 13px 14px 12px;
@@ -1427,6 +1395,7 @@ p {
   margin-top: 28px;
 }
 .experience-tab {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 18px;
@@ -1442,7 +1411,15 @@ p {
 }
 .experience-tab.active {
   background: #596f941c;
-  border-left-color: #9eafcc;
+}
+.experience-tab-indicator {
+  position: absolute;
+  left: -2px;
+  top: -1px;
+  bottom: -1px;
+  width: 2px;
+  background: var(--accent-strong);
+  pointer-events: none;
 }
 .experience-tab-icon {
   display: grid;
@@ -2031,21 +2008,86 @@ p {
 }
 .consent {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: 7px;
-  margin: 14px 0 0;
-  font-size: 9px;
+  gap: 10px;
+  margin: 10px 0 0;
+  min-height: 44px;
+  font-size: 11px;
   color: #5a7097;
   text-align: left;
   line-height: 1.7;
+  cursor: pointer;
+}
+.consent-control {
+  position: relative;
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
 }
 .consent input {
-  accent-color: #475876;
-  margin-top: 2px;
-  width: 12px;
-  height: 12px;
+  appearance: none;
+  display: grid;
+  place-content: center;
+  margin: 0;
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
+  border: 1.5px solid var(--accent-strong);
+  border-radius: 6px;
+  background: var(--accent-surface);
+  cursor: pointer;
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 140ms ease;
+}
+.consent-control svg {
+  position: absolute;
+  inset: 0;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  fill: none;
+  stroke: var(--surface);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.consent-control path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition: stroke-dashoffset 160ms ease-in, opacity 120ms ease;
+}
+.consent input:checked {
+  background: var(--accent-strong);
+  animation: consent-settle 280ms ease-out;
+}
+.consent input:checked + svg path {
+  stroke-dashoffset: 0;
+  opacity: 1;
+  transition: stroke-dashoffset 260ms cubic-bezier(0.22, 1, 0.36, 1) 50ms, opacity 80ms ease 50ms;
+}
+.consent input:hover {
+  box-shadow: 0 0 0 3px var(--accent-surface);
+}
+.consent input:active {
+  transform: scale(0.92);
+}
+@keyframes consent-settle {
+  0% { scale: 0.92; }
+  60% { scale: 1.06; }
+  100% { scale: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .consent input,
+  .consent-control path,
+  .consent input:checked + svg path {
+    animation: none;
+    transition: none;
+  }
+  .consent input:active {
+    transform: none;
+  }
 }
 .consent button {
   text-decoration: underline;
@@ -2326,9 +2368,6 @@ p {
 }
 [data-language="ka"] .phone-greeting h3 {
   font-size: 17px;
-}
-[data-language="ka"] .phone-tabs button {
-  font-size: 8px;
 }
 [data-language="ka"] .phone-compact .phone-greeting h3 {
   font-size: 15px;
@@ -2722,7 +2761,7 @@ p {
     width: 100%;
     max-width: 100%;
   }
-  .phone :is(.phone-greeting > div, .phone-tabs button,
+  .phone :is(.phone-greeting > div,
     .phone-section-heading > *, .obligation-label, .obligation-number,
     .progress-card > div, .timeline-item > div:nth-child(2),
     .range-heading > *, .plan-insight > span) {
@@ -3277,13 +3316,13 @@ p {
     width: 16px;
   }
   .consent {
-    font-size: 9px;
+    font-size: 11px;
     justify-content: flex-start;
   }
   .form-footnote {
     font-size: 8px;
     text-align: left;
-    margin-left: 19px;
+    margin-left: 32px;
   }
   .platforms {
     gap: 22px;

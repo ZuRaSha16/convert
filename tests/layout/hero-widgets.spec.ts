@@ -85,7 +85,7 @@ for (const language of ["en", "ka"]) {
       }));
       expect(fit).toEqual([true, true]);
       for (const tab of [1, 2, 0]) {
-        await page.locator(".hero-phone .phone-tabs button").nth(tab).click();
+        await page.locator(".hero-phone .phone-bottom-nav button").nth(tab).click();
       }
       await page.locator(".hero-phone .notification-button").click();
 

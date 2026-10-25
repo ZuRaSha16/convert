@@ -85,7 +85,7 @@ for (const width of [320, 390, 1440]) {
     for (const model of [".hero-phone .phone", ".experience-phone-stage .phone"]) {
       const phone = page.locator(model);
       for (const [index, name, direction] of [[1, "timeline", 1], [2, "plan", 1], [0, "overview", -1]] as const) {
-        const button = phone.locator(".phone-tabs button").nth(index);
+        const button = phone.locator(".phone-bottom-nav button").nth(index);
         await button.focus();
         const [samples] = await Promise.all([
           phone.evaluate(async (phone, name) => {
@@ -127,8 +127,8 @@ for (const width of [320, 390, 1440]) {
     await range.press("End");
     await expect(range).toHaveValue("1500");
     await expect(phone.locator(".plan-ring strong")).toHaveText("3");
-    await phone.locator(".phone-tabs button").nth(0).focus();
-    await phone.locator(".phone-tabs button").nth(0).press("Enter");
+    await phone.locator(".phone-bottom-nav button").nth(0).focus();
+    await phone.locator(".phone-bottom-nav button").nth(0).press("Enter");
     await expect(phone.locator(".phone-view-stage")).toHaveAttribute("data-motion-direction", "-1");
     await expect(page.locator(".experience-tabs .experience-tab").nth(0)).toHaveAttribute("aria-pressed", "true");
     await expect(phone.locator(".phone-view")).toHaveCount(1);
@@ -146,7 +146,7 @@ for (const width of [320, 390, 1440]) {
     for (const model of [".hero-phone .phone", ".experience-phone-stage .phone"]) {
       const phone = page.locator(model);
       await phone.evaluate(async phone => {
-        const buttons = phone.querySelectorAll<HTMLButtonElement>(".phone-tabs button");
+        const buttons = phone.querySelectorAll<HTMLButtonElement>(".phone-bottom-nav button");
         for (const index of [1, 2, 0, 2, 1]) {
           buttons[index].click();
           await new Promise(resolve => setTimeout(resolve, 45));
@@ -180,8 +180,8 @@ test("enabling reduced motion during navigation immediately stops entrances", as
     .filter(animation => animation.id.startsWith("convert-entry")).length)).toBe(0);
 
   const phone = page.locator(".experience-phone-stage .phone");
-  await phone.locator(".phone-tabs button").nth(2).focus();
-  await phone.locator(".phone-tabs button").nth(2).press("Enter");
+  await phone.locator(".phone-bottom-nav button").nth(2).focus();
+  await phone.locator(".phone-bottom-nav button").nth(2).press("Enter");
   await expect(phone.locator(".phone-view")).toHaveCount(1);
   await expect(phone.locator(".phone-view")).toHaveCSS("transform", "none");
   await expect(phone.locator(".phone-view")).toHaveCSS("opacity", "1");

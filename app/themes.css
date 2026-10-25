@@ -194,12 +194,8 @@
 :root .notification-button i { background: var(--accent-strong); }
 :root .orbital-dot { background: var(--accent); box-shadow: 0 0 0 6px var(--scene-selection); }
 :root ::selection { background: var(--accent); color: var(--accent-ink); }
-:root .phone-tabs { border-color: var(--line); }
-:root .hero-phone .phone-tabs { background: var(--surface-raised); }
-:root .hero-phone .phone-tabs button.active { background: var(--surface); }
-:root :is(.phone-tabs button, .phone-bottom-nav button) { color: var(--muted); }
-:root :is(.phone-tabs button.active, .phone-bottom-nav button.active) { color: var(--accent-strong); }
-:root .phone-tabs button.active::after { background: var(--accent-strong); }
+:root .phone-bottom-nav button { color: var(--muted); }
+:root .phone-bottom-nav button.active { color: var(--accent-strong); }
 :root :is(.balance-card, .timeline-summary) { background: var(--mint); border-color: var(--line); }
 :root .balance-card { box-shadow: inset 0 1px 0 var(--line), 0 4px 12px var(--shadow-color); }
 :root :is(.balance-top, .balance-amount > span:last-child, .balance-bottom > span:last-child,

@@ -26,26 +26,6 @@
   height: 32px;
   flex-shrink: 0;
 }
-.hero-phone .phone-tabs {
-  gap: 3px;
-  padding: 4px;
-  border: 0;
-  border-radius: 10px;
-  background: #e5edf7;
-  margin-bottom: 14px;
-}
-.hero-phone .phone-tabs button {
-  padding: 6px 3px;
-  border-radius: 7px;
-  font-size: 10px;
-}
-.hero-phone .phone-tabs button.active {
-  background: #fff;
-  box-shadow: 0 2px 5px #1c3c6012;
-}
-.hero-phone .phone-tabs button.active::after {
-  display: none;
-}
 .hero-phone .phone-compact .balance-card {
   padding: 17px 15px 14px;
   border-radius: 17px;

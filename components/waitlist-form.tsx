@@ -112,7 +112,12 @@ export function WaitlistForm({
         />
       </div>
       <label className="consent">
-        <input type="checkbox" name="consent" required />
+        <span className="consent-control">
+          <input type="checkbox" name="consent" required />
+          <svg viewBox="0 0 22 22" aria-hidden="true" focusable="false">
+            <path d="m6 11 3.5 3.5L16 8" pathLength="1" />
+          </svg>
+        </span>
         <span>
           {t(
             "I agree to receive launch updates and the ",
@@ -131,8 +136,8 @@ export function WaitlistForm({
       )}
       <p className="form-footnote">
         {t(
-          "Only meaningful updates. Unsubscribe whenever you like.",
-          "მხოლოდ მნიშვნელოვანი სიახლეები. გამოწერის გაუქმება ნებისმიერ დროს.",
+          "Only meaningful updates.",
+          "მხოლოდ მნიშვნელოვანი სიახლეები.",
         )}
       </p>
     </form>

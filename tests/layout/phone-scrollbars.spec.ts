@@ -10,7 +10,7 @@ for (const width of [390, 1440]) {
       const phone = page.locator(model);
       for (const tab of [1, 2, 0]) {
         // Keyboard activation also works where decorative desktop widgets overlap.
-        const button = phone.locator(".phone-tabs button").nth(tab);
+        const button = phone.locator(".phone-bottom-nav button").nth(tab);
         await button.focus();
         await button.press("Enter");
         const content = phone.locator([".balance-card", ".timeline-view", ".plan-view"][tab]);

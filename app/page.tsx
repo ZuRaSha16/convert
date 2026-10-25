@@ -87,7 +87,7 @@ function Landing({
   const t = useCopy();
   const [menuOpen, setMenuOpen] = useState(false);
   const [tab, setTab] = useState<PreviewTab>("overview");
-  const [faq, setFaq] = useState<number | null>(0);
+  const [faq, setFaq] = useState<number | null>(null);
   const privacyRef = useRef<HTMLDialogElement>(null);
   const reduce = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
@@ -424,6 +424,17 @@ function Landing({
                         <p>{item.description}</p>
                       </span>
                       <ArrowUpRight size={18} />
+                      {tab === item.key && (
+                        <motion.span
+                          className="experience-tab-indicator"
+                          layoutId="experience-tab-indicator"
+                          aria-hidden="true"
+                          transition={{
+                            duration: reduce ? 0 : 0.35,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                        />
+                      )}
                     </button>
                   ))}
                 </div>

@@ -191,27 +191,6 @@ export function PhonePreview({
             )}
           </div>
         )}
-        <div
-          className="phone-tabs"
-          aria-label={t("Preview views", "დემო ხედები")}
-        >
-          {(["overview", "timeline", "plan"] as const).map((item, i) => (
-            <button
-              key={item}
-              onClick={() => changeTab(item)}
-              aria-pressed={tab === item}
-              className={tab === item ? "active" : ""}
-            >
-              {
-                [
-                  t("Overview", "მიმოხილვა"),
-                  t("Timeline", "ვადები"),
-                  t("My plan", "გეგმა"),
-                ][i]
-              }
-            </button>
-          ))}
-        </div>
         <div className="phone-view-stage" data-motion-direction={navigation.direction}>
         <AnimatePresence mode="sync" initial={false} custom={{ direction: navigation.direction, reduce }}>
           <PreviewView
@@ -423,6 +402,7 @@ export function PhonePreview({
           (Icon, i) => (
             <button
               key={i}
+              aria-pressed={tab === previewTabs[i]}
               onClick={() =>
                 changeTab((["overview", "timeline", "plan"] as const)[i])
               }
