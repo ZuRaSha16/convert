@@ -78,8 +78,19 @@ export async function POST(request: Request) {
       signal: AbortSignal.timeout(8000),
       cache: "no-store",
     });
-    if (!response.ok)
+    if (!response.ok) {
+      // Log only status and a bounded error code, never submitted data or credentials.
+      const error = await response.json().catch(() => null);
+      const databaseCode =
+        typeof error?.code === "string" && /^[A-Z0-9_]{1,32}$/.test(error.code)
+          ? error.code
+          : "unknown";
+      console.error("Waitlist database write failed", {
+        status: response.status,
+        code: databaseCode,
+      });
       return Response.json({ code: "storage_failed" }, { status: 502 });
+    }
     return Response.json(
       { ok: true },
       { status: 201, headers: { "Cache-Control": "no-store" } },

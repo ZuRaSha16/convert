@@ -22,6 +22,7 @@ function handler(
   fetch = () => {
     throw new Error("Unexpected external call");
   },
+  logs = [],
 ) {
   const context = {
     exports: {},
@@ -31,6 +32,7 @@ function handler(
     AbortSignal,
     process: { env },
     fetch,
+    console: { error: (...args) => logs.push(args) },
   };
   runInNewContext(compiled, context);
   return context.exports.POST;
@@ -137,6 +139,28 @@ test("a rejected database write is never reported as registration", async () => 
   const response = await post(request());
   assert.equal(response.status, 502);
   assert.equal((await response.json()).code, "storage_failed");
+});
+
+test("database diagnostics log only status and code without private details", async () => {
+  const logs = [];
+  const post = handler(
+    {
+      SUPABASE_URL: "https://project.example",
+      SUPABASE_SERVICE_ROLE_KEY: "private-test-key",
+    },
+    async () => Response.json({
+      code: "42501",
+      message: "private-test-key person@example.com",
+      details: "private database details",
+    }, { status: 403 }),
+    logs,
+  );
+  const response = await post(request());
+  assert.equal(response.status, 502);
+  assert.equal((await response.json()).code, "storage_failed");
+  assert.equal(JSON.stringify(logs), JSON.stringify([
+    ["Waitlist database write failed", { status: 403, code: "42501" }],
+  ]));
 });
 
 test("database network errors produce an honest unavailable response", async () => {
