@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { themeInitializationScript } from "@/lib/theme";
+import { PageScrollbar } from "@/components/page-scrollbar";
 import "./globals.css";
 import "./hero-preview.css";
 import "./feature-motion.css";
@@ -11,6 +12,7 @@ import "./themes.css";
 import "./clarity-network.css";
 import "./hero-widgets.css";
 import "./fingerprint.css";
+import "./page-scrollbar.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -92,7 +94,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitializationScript }} />
       </head>
-      <body>{children}</body>
+      <body>{children}<PageScrollbar /></body>
     </html>
   );
 }

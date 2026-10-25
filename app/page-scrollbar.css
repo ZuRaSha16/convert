@@ -1,0 +1,37 @@
+/* Only hide the browser bar after the custom control has mounted on desktop. */
+html[data-custom-scrollbar] {
+  scrollbar-width: none;
+}
+html[data-custom-scrollbar]::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.page-scrollbar {
+  display: none;
+  position: fixed;
+  z-index: 110;
+  top: 8px;
+  right: 2px;
+  bottom: 8px;
+  width: 16px;
+  cursor: default;
+  touch-action: none;
+  user-select: none;
+}
+html[data-custom-scrollbar] .page-scrollbar[data-visible="true"] {
+  display: block;
+}
+.page-scrollbar-thumb {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 7px;
+  width: 2px;
+  border-radius: 999px;
+  background: var(--accent);
+  cursor: default;
+}
+.page-scrollbar:focus-visible {
+  outline: none;
+}
