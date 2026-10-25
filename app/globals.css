@@ -70,6 +70,12 @@ svg {
   background: #9defcd;
   color: #182131;
 }
+/* Keep the app mockups and demonstration cards from selecting text on drag or long press. */
+:is(.phone, .hero-widgets, .feature-card, .clarity-network),
+:is(.phone, .hero-widgets, .feature-card, .clarity-network) * {
+  -webkit-user-select: none;
+  user-select: none;
+}
 :focus-visible {
   outline: 2px solid var(--accent-strong);
   outline-offset: 5px;
