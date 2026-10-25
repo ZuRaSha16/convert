@@ -34,7 +34,7 @@ test("widgets stay in place and expose no drag controls", async ({ page }) => {
   }
 });
 
-test("reminder and breakdown actions give feedback without moving or resizing cards", async ({ page }) => {
+test("reminder and payment preview give feedback without moving or resizing cards", async ({ page }) => {
   await prepare(page);
   const sizes = () => page.locator(".hero-widget-position").evaluateAll(nodes =>
     nodes.map(node => [(node as HTMLElement).offsetWidth, (node as HTMLElement).offsetHeight]));
@@ -45,11 +45,17 @@ test("reminder and breakdown actions give feedback without moving or resizing ca
   await expect(reminder).toHaveText("Reminder set");
   await reminder.click();
   await expect(reminder).toHaveAttribute("aria-pressed", "false");
-  await page.getByRole("button", { name: "Show progress breakdown", exact: true }).click();
-  await expect(page.locator(".widget-progress-action")).toHaveAttribute("aria-expanded", "true");
-  await expect(page.getByText("32% repaid · 68% to go", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Hide progress breakdown", exact: true }).click();
-  await expect(page.getByText("32% repaid · 68% to go", { exact: true })).toBeHidden();
+  const progress = page.locator(".hero-widget-progress");
+  await expect(progress.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "32");
+  await progress.getByRole("button", { name: "Add payment", exact: true }).click();
+  await expect(progress.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "40");
+  await expect(progress.locator(".widget-progress-caption")).toHaveText("+8% repaid");
+  await expect.poll(() => progress.locator(".widget-progress > span").evaluate(node =>
+    Math.round(node.getBoundingClientRect().width / node.parentElement!.getBoundingClientRect().width * 100)
+  )).toBe(40);
+  await progress.getByRole("button", { name: "Undo payment", exact: true }).click();
+  await expect(progress.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "32");
+  await expect(progress.getByText("68% to go", { exact: true })).toBeVisible();
   expect(await sizes()).toEqual(original);
   expect(await offset(page, "reminder")).toEqual({ x: 0, y: 0 });
   expect(await offset(page, "progress")).toEqual({ x: 0, y: 0 });

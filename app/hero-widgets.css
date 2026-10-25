@@ -37,9 +37,6 @@
 }
 .hero-widget-reminder { --widget-angle: 3deg; }
 .hero-widget-progress { --widget-angle: -3deg; }
-.hero-widget-position:focus-within .hero-widget-surface {
-  border-color: var(--accent-strong);
-}
 .widget-heading { display: flex; align-items: center; gap: 11px; }
 .widget-heading-copy { min-width: 0; }
 .hero-stage .hero-widget-surface .float-icon,
@@ -110,14 +107,15 @@
 .widget-progress-summary { display: flex; align-items: baseline; gap: 8px; margin-top: 12px; }
 .hero-stage .hero-widget-surface .widget-progress-summary > strong { font-size: 32px; font-weight: 550; letter-spacing: -1.3px; line-height: 1.1; margin: 0; }
 .widget-progress-summary > strong > span { font-size: 20px; }
+.hero-stage .hero-widget-surface .widget-progress-number { display: inline-flex; overflow: hidden; font-size: inherit; vertical-align: bottom; }
+.widget-progress-number > span { display: block; }
 .hero-widget-surface .widget-progress-summary > span { color: var(--muted); font-size: 11px; line-height: 1.5; }
 .hero-widget-surface .widget-progress { height: 5px; margin-top: 12px; background: var(--line); border-radius: 10px; overflow: hidden; }
 .hero-widget-surface .widget-progress > span { display: block; width: 32%; height: 100%; background: var(--accent-strong); border-radius: inherit; }
-.widget-progress-footer { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-top: 5px; }
+.widget-progress-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
 .hero-widget-surface .widget-progress-detail { min-width: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
-.widget-progress-action { width: 44px; padding: 0; border-color: transparent; background: transparent; }
-.widget-progress-action > svg { transition: rotate 200ms ease; }
-.widget-progress-action[aria-expanded="true"] > svg { rotate: 180deg; }
+.widget-progress-detail small { display: block; font-size: 8px; margin-top: 3px; }
+.widget-progress-action { color: var(--accent-strong); border-color: color-mix(in srgb, var(--accent-strong) 35%, var(--line)); background: var(--accent-surface); }
 
 @media (hover: hover) and (pointer: fine) {
   .hero-widget-position:hover .hero-widget-surface { scale: 1.015; border-color: var(--accent-strong); box-shadow: 0 20px 40px var(--shadow-color), 0 4px 10px var(--shadow-color); }

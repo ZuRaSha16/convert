@@ -1,8 +1,8 @@
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { motion } from "motion/react";
-import { Bell, BellRing, Check, ChevronDown, Sparkles } from "lucide-react";
+import { ArrowUpRight, Bell, BellRing, Check, RotateCcw, Sparkles } from "lucide-react";
 import { useCopy } from "./language";
 import { useReducedMotion } from "./use-reduced-motion";
 
@@ -35,8 +35,9 @@ function FloatingWidget({
 export function HeroWidgets() {
   const t = useCopy();
   const [reminderSet, setReminderSet] = useState(false);
-  const [showBreakdown, setShowBreakdown] = useState(false);
-  const breakdownId = useId();
+  const [paymentPreview, setPaymentPreview] = useState(false);
+  const progress = paymentPreview ? 40 : 32;
+  const reduce = useReducedMotion();
 
   return (
     <div className="hero-widgets">
@@ -73,7 +74,9 @@ export function HeroWidgets() {
           <span className="mini-ring">
             <svg viewBox="0 0 48 48" aria-hidden="true">
               <circle className="widget-ring-track" cx="24" cy="24" r="20" />
-              <circle className="widget-ring-fill" cx="24" cy="24" r="20" pathLength="100" strokeDasharray="32 100" />
+              <motion.circle className="widget-ring-fill" cx="24" cy="24" r="20" pathLength="100"
+                initial={false} animate={{ strokeDasharray: `${progress} 100` }}
+                transition={{ duration: reduce ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }} />
             </svg>
             <Sparkles size={18} aria-hidden="true" />
           </span>
@@ -83,24 +86,34 @@ export function HeroWidgets() {
           </div>
         </div>
         <div className="widget-progress-summary">
-          <strong>32<span>%</span></strong>
+          <strong>
+            <span className="widget-progress-number">
+              <motion.span key={progress} initial={reduce ? false : { y: "100%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}>
+                {progress}
+              </motion.span>
+            </span><span>%</span>
+          </strong>
+          <span className="widget-progress-caption" aria-live="polite">
+            {paymentPreview ? t("+8% repaid", "+8% დაფარულია") : t("repaid so far", "უკვე დაფარულია")}
+          </span>
         </div>
-        <div className="widget-progress" role="progressbar" aria-label={t("Loan repaid", "დაფარული სესხი")} aria-valuenow={32} aria-valuemin={0} aria-valuemax={100}>
-          <span />
+        <div className="widget-progress" role="progressbar" aria-label={t("Loan repaid", "დაფარული სესხი")} aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+          <motion.span initial={false} animate={{ width: `${progress}%` }}
+            transition={{ duration: reduce ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }} />
         </div>
         <div className="widget-progress-footer">
-          <span className="widget-progress-detail" aria-live="polite">
-            <span id={breakdownId} hidden={!showBreakdown}>{t("32% repaid · 68% to go", "32% დაფარულია · დარჩა 68%")}</span>
+          <span className="widget-progress-detail">
+            <span>{t(`${100 - progress}% to go`, `დარჩა ${100 - progress}%`)}</span>
+            <small>{t("Next goal: 50%", "შემდეგი მიზანი: 50%")}</small>
           </span>
           <button
             type="button"
             className="widget-action widget-progress-action"
-            aria-expanded={showBreakdown}
-            aria-controls={breakdownId}
-            aria-label={showBreakdown ? t("Hide progress breakdown", "პროგრესის დეტალების დამალვა") : t("Show progress breakdown", "პროგრესის დეტალების ჩვენება")}
-            onClick={() => setShowBreakdown(!showBreakdown)}
+            onClick={() => setPaymentPreview(!paymentPreview)}
           >
-            <ChevronDown size={16} aria-hidden="true" />
+            {paymentPreview ? <RotateCcw size={13} aria-hidden="true" /> : <ArrowUpRight size={13} aria-hidden="true" />}
+            {paymentPreview ? t("Undo payment", "გადახდის გაუქმება") : t("Add payment", "გადახდის დამატება")}
           </button>
         </div>
       </FloatingWidget>
