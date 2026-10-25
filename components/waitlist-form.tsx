@@ -13,9 +13,9 @@ export function WaitlistForm({
   openPrivacy: () => void;
 }) {
   const t = useCopy();
-  const [state, setState] = useState<"idle" | "loading" | "success" | "error">(
-    "idle",
-  );
+  const [state, setState] = useState<
+    "idle" | "loading" | "success" | "already-registered" | "error"
+  >("idle");
   const [message, setMessage] = useState("");
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -36,7 +36,7 @@ export function WaitlistForm({
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.code || "failed");
-      setState("success");
+      setState(result.alreadyRegistered === true ? "already-registered" : "success");
     } catch (error) {
       setState("error");
       setMessage(
@@ -52,15 +52,22 @@ export function WaitlistForm({
       );
     }
   }
-  if (state === "success")
+  if (state === "success" || state === "already-registered")
     return (
       <div className="waitlist-success" role="status">
         <span>
           <Check size={25} />
         </span>
-        <h3>{t("You’re on the list.", "თქვენ სიაში ხართ.")}</h3>
+        <h3>
+          {state === "already-registered"
+            ? t("You’re already on the list.", "თქვენ უკვე სიაში ხართ.")
+            : t("You’re on the list.", "თქვენ სიაში ხართ.")}
+        </h3>
         <p>
-          {t(
+          {state === "already-registered" ? t(
+            "This email address is already registered. No need to sign up again. Thank you for your support!",
+            "ეს ელფოსტა უკვე რეგისტრირებულია. ხელახლა რეგისტრაცია საჭირო არ არის. მადლობა მხარდაჭერისთვის!",
+          ) : t(
             "We’ll email you when there’s something worth sharing. Thank you for being here from the beginning.",
             "მოგწერთ, როცა სიახლეები გვექნება. მადლობა, რომ თავიდანვე ჩვენთან ხართ.",
           )}

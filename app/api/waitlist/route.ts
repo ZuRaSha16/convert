@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { sendWelcomeEmail } from "../../../lib/send-welcome-email";
 
 // This endpoint never reports success before the configured database accepts a row.
 export async function POST(request: Request) {
@@ -55,7 +56,7 @@ export async function POST(request: Request) {
 
   try {
     const endpoint = new URL(
-      "/rest/v1/waitlist?on_conflict=email",
+      "/rest/v1/waitlist?on_conflict=email&select=id",
       databaseUrl,
     );
     if (endpoint.protocol !== "https:")
@@ -66,7 +67,7 @@ export async function POST(request: Request) {
         apikey: serviceKey,
         Authorization: `Bearer ${serviceKey}`,
         "Content-Type": "application/json",
-        Prefer: "resolution=ignore-duplicates,return=minimal",
+        Prefer: "resolution=ignore-duplicates,return=representation",
       },
       body: JSON.stringify({
         email,
@@ -90,6 +91,16 @@ export async function POST(request: Request) {
         code: databaseCode,
       });
       return Response.json({ code: "storage_failed" }, { status: 502 });
+    }
+    const inserted: unknown = await response.json().catch(() => null);
+    if (Array.isArray(inserted) && inserted.length === 0) {
+      return Response.json(
+        { ok: true, alreadyRegistered: true },
+        { status: 200, headers: { "Cache-Control": "no-store" } },
+      );
+    }
+    if (Array.isArray(inserted) && typeof inserted[0]?.id === "string") {
+      await sendWelcomeEmail(email, body.language, inserted[0].id);
     }
     return Response.json(
       { ok: true },

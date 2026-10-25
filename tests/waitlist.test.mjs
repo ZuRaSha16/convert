@@ -16,6 +16,13 @@ const compiled = ts.transpileModule(source, {
     target: ts.ScriptTarget.ES2022,
   },
 }).outputText;
+const emailModules = Object.fromEntries([
+  ["../../../lib/send-welcome-email", "../lib/send-welcome-email.ts"],
+  ["./welcome-email", "../lib/welcome-email.ts"],
+].map(([name, path]) => [name, ts.transpileModule(
+  readFileSync(new URL(path, import.meta.url), "utf8"),
+  { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } },
+).outputText]));
 
 function handler(
   env = {},
@@ -26,7 +33,12 @@ function handler(
 ) {
   const context = {
     exports: {},
-    require,
+    require: (name) => {
+      if (!emailModules[name]) return require(name);
+      const moduleContext = { ...context, exports: {} };
+      runInNewContext(emailModules[name], moduleContext);
+      return moduleContext.exports;
+    },
     Response,
     URL,
     AbortSignal,
@@ -111,11 +123,11 @@ test("successful signup writes normalized data to the configured database", asyn
       assert.equal(url.searchParams.get("on_conflict"), "email");
       assert.equal(
         options.headers.Prefer,
-        "resolution=ignore-duplicates,return=minimal",
+        "resolution=ignore-duplicates,return=representation",
       );
       assert.equal(options.headers.Authorization, "Bearer test-only-key");
       saved = JSON.parse(options.body);
-      return new Response(null, { status: 201 });
+      return Response.json([{ id: "new-signup-id" }], { status: 201 });
     },
   );
   const response = await post(
@@ -182,4 +194,91 @@ test("database secrets are never sent over plain HTTP", async () => {
     SUPABASE_SERVICE_ROLE_KEY: "test",
   });
   assert.equal((await post(request())).status, 503);
+});
+
+const emailEnv = {
+  SUPABASE_URL: "https://project.example",
+  SUPABASE_SERVICE_ROLE_KEY: "test-db-key",
+  RESEND_API_KEY: "test-email-key",
+  WAITLIST_EMAIL_FROM: "Convert <hello@example.com>",
+  WAITLIST_EMAIL_REPLY_TO: "support@example.com",
+  SITE_URL: "https://convert.example.com",
+};
+
+test("a new signup receives the localized branded email only after storage succeeds", async () => {
+  const calls = [];
+  let emailOptions;
+  const post = handler(emailEnv, async (url, options) => {
+    calls.push(String(url));
+    if (calls.length === 1) {
+      assert.equal(url.searchParams.get("select"), "id");
+      return Response.json([{ id: "signup-id" }], { status: 201 });
+    }
+    emailOptions = options;
+    return Response.json({ id: "email-id" });
+  });
+  assert.equal((await post(request({ ...valid, language: "ka" }))).status, 201);
+  assert.equal(calls.length, 2);
+  assert.equal(calls[1], "https://api.resend.com/emails");
+  assert.equal(emailOptions.headers.Authorization, "Bearer test-email-key");
+  assert.equal(emailOptions.headers["Idempotency-Key"], "waitlist-welcome/signup-id");
+  const content = JSON.parse(emailOptions.body);
+  assert.deepEqual(content.to, ["person@example.com"]);
+  assert.equal(content.from, emailEnv.WAITLIST_EMAIL_FROM);
+  assert.equal(content.reply_to, emailEnv.WAITLIST_EMAIL_REPLY_TO);
+  assert.match(content.subject, /Convert/);
+  assert.match(content.html, /თქვენ სიაში ხართ/);
+  assert.match(content.html, /https:\/\/convert.example.com\/icon.png/);
+  assert.match(content.text, /მადლობა/);
+});
+
+test("duplicate signup reports already registered without sending another welcome email", async () => {
+  let calls = 0;
+  const post = handler(emailEnv, async () => {
+    calls++;
+    return Response.json([]);
+  });
+  const response = await post(request({ ...valid, email: "  Person@Example.com  " }));
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), { ok: true, alreadyRegistered: true });
+  assert.equal(response.headers.get("Cache-Control"), "no-store");
+  assert.equal(calls, 1);
+});
+
+test("rejected storage does not send welcome email", async () => {
+  let calls = 0;
+  const post = handler(emailEnv, async () => {
+    calls++;
+    return Response.json({ code: "42501" }, { status: 403 });
+  });
+  assert.equal((await post(request())).status, 502);
+  assert.equal(calls, 1);
+});
+
+test("provider rejection or network failure preserves successful signup without leaking private data", async () => {
+  for (const networkFailure of [false, true]) {
+    const logs = [];
+    let calls = 0;
+    const post = handler(emailEnv, async () => {
+      if (++calls === 1) return Response.json([{ id: "signup-id" }]);
+      if (networkFailure) throw new Error("person@example.com test-email-key");
+      return Response.json({ message: "person@example.com test-email-key" }, { status: 403 });
+    }, logs);
+    assert.equal((await post(request())).status, 201);
+    assert.equal(calls, 2);
+    assert.match(JSON.stringify(logs), /welcome email/);
+    assert.doesNotMatch(JSON.stringify(logs), /person@example.com|test-email-key/);
+  }
+});
+
+test("incomplete email settings preserve storage and never call email provider", async () => {
+  for (const override of [{ RESEND_API_KEY: "" }, { SITE_URL: "" }, { WAITLIST_EMAIL_FROM: "" }, { SITE_URL: "http://localhost:3000" }]) {
+    let calls = 0;
+    const post = handler({ ...emailEnv, ...override }, async () => {
+      calls++;
+      return Response.json([{ id: "signup-id" }]);
+    });
+    assert.equal((await post(request())).status, 201);
+    assert.equal(calls, 1);
+  }
 });

@@ -31,9 +31,22 @@ Run `npm run test:layout` after building to check both phone previews at 320, 37
 3. Copy `.env.example` to `.env.local` and configure `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (or configure those secrets in your deployment host).
 4. Restart Next.js.
 
-The route writes directly to the `waitlist` table through Supabase REST. It validates email, consent, origin, payload size, language, and a honeypot field. A unique email constraint makes repeat submissions idempotent without exposing whether an address was already registered. Anonymous and authenticated browser roles have no access to the table. Service-role credentials remain server-side.
+The route writes directly to the `waitlist` table through Supabase REST. It validates email, consent, origin, payload size, language, and a honeypot field. A unique email constraint prevents duplicate rows. Repeat submissions return `alreadyRegistered: true` so the site can show an English or Georgian already-registered notice. Anonymous and authenticated browser roles have no access to the table. Service-role credentials remain server-side.
 
-When unconfigured, the endpoint returns HTTP 503 and the form explicitly says that the address was not saved. It never simulates successful signup. Storage failures are surfaced as errors. This project does not send emails. Configure an email provider and actual unsubscribe/deletion handling before sending launch emails; the privacy notice describes those obligations. Apply host-level rate limits/bot protection before public collection. Review the privacy notice and retention policy with the product owner before launch.
+When unconfigured, the endpoint returns HTTP 503 and the form explicitly says that the address was not saved. It never simulates successful signup. Storage failures are surfaced as errors. Apply host-level rate limits/bot protection before public collection. Review the privacy notice and retention policy with the product owner before launch.
+
+## Welcome emails
+
+New signups can receive a branded English or Georgian confirmation via Resend, matching their selected language. Duplicate signups do not trigger email. No database migration is required; the insert returns only the new row ID to distinguish a new signup from a duplicate.
+
+1. Create a Resend account, add a domain you own, and verify its DNS records. Your website can stay on Vercel's shared domain, but email must use a sender domain you control.
+2. Create a Resend API key with sending permission.
+3. In Vercel's Production environment, add `RESEND_API_KEY` (Secret) and `WAITLIST_EMAIL_FROM` (for example, `Convert <hello@your-owned-domain.com>`). Set `SITE_URL` to your public HTTPS website URL. Optionally set `WAITLIST_EMAIL_REPLY_TO` to a monitored inbox; otherwise monitor the From address for replies.
+4. Deploy this code and the environment settings. Test with a new email address; already registered addresses do not receive a welcome email.
+
+No API key means welcome emails are disabled and collection continues normally. Delivery is attempted after the database accepts a new signup, with an 8-second timeout and a Resend idempotency key based on the signup ID. Delivery failures are logged with no recipient or secret data, and signup still succeeds. There is no automatic retry queue or retroactive sending to existing subscribers. Resend accepting a message does not guarantee inbox delivery; check its dashboard for delivery status. Configure unsubscribe/deletion handling before sending future launch campaigns.
+
+Run `node scripts/preview-welcome-email.mjs` to generate local HTML and PNG previews at desktop and mobile widths in `artifacts/welcome-email/`. The PNG logo is served from `SITE_URL/icon.png`; email clients may hide remote images until allowed. The wordmark and text remain readable.
 
 ## Structure
 

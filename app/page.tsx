@@ -904,8 +904,8 @@ function Landing({
             </p>
             <p>
               {t(
-                "Registration data is stored in our configured database, accessible to authorized operators and the hosting provider. We do not sell waitlist data.",
-                "მონაცემები ინახება კონფიგურირებულ ბაზაში, რომელზეც წვდომა აქვთ უფლებამოსილ ოპერატორებს და ჰოსტინგის პროვაიდერს. მონაცემებს არ ვყიდით.",
+                "Registration data is stored in Supabase and accessible to authorized operators and our hosting provider. When welcome emails are enabled, we share your email address with Resend to deliver your confirmation. We do not sell waitlist data.",
+                "რეგისტრაციის მონაცემები ინახება Supabase-ში და ხელმისაწვდომია უფლებამოსილი ოპერატორებისა და ჰოსტინგის პროვაიდერისთვის. მისასალმებელი წერილების ჩართვისას თქვენს ელფოსტას Resend-ს ვუზიარებთ დასტურის გამოსაგზავნად. მონაცემებს არ ვყიდით.",
               )}
             </p>
             <p>
